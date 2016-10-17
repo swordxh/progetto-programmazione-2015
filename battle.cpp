@@ -3,7 +3,7 @@
 battle::battle(Player *p_curr, Manage *man)
 {
 	p=p_curr;
-    manage=man;
+    	manage=man;
 	dracula=NULL;
 	spiderman=NULL;
 	romero=NULL;
