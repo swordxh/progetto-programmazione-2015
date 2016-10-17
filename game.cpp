@@ -54,7 +54,6 @@ void Inventory::deleteObject(int slotInventario){
     //elimina oggetto dall'inventario
     Object* app=oggetto[slotInventario];
     delete app;
-    oggetto[slotInventario]=new Object;
     oggetto[slotInventario]=NULL;
     slot[slotInventario]=0; //indico che lo slot nell'inventario corrispondente all'oggetto eliminato si è svuotato
     }
