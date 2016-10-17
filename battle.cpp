@@ -78,12 +78,14 @@ int battle::IOManager(){ //ritorna il danno del oggetto che si è scelto
 	counter=1;
 	bool exit=false;
 	int i=0;
+	bool ispotion=false;
 	while (!exit){
 		if ((p->showInventory()->slotIsFull(i)) && (select==counter)){
 			if (p->showInventory()->AccessObjectFromInventory(i)==0){
 				p->lifeFix(-potionHP);
 				cout<<"usi la Pozione che ti restituisce "<<potionHP<<" HP!"<<endl;
 				p->showInventory()->deleteObject(i);
+				ispotion=true;
 			}
 			exit=true;
 		}
@@ -91,7 +93,8 @@ int battle::IOManager(){ //ritorna il danno del oggetto che si è scelto
 		i++;
 	}
 	i--;
-	return p->showInventory()->AccessObjectFromInventory(i);
+	if(!ispotion) return p->showInventory()->AccessObjectFromInventory(i);
+    	else return 0;
 }
 void battle::WinScreen(){
 	cout<<"			CONGRATULAZIONI HAI BATTUTO IL "<<MonsterName<<endl;
