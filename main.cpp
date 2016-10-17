@@ -7,6 +7,7 @@
 
 #include "game.hpp"
 #include "battle.hpp"
+#include "boss.hpp"
 
 int main(){
     Inventory a;
@@ -50,7 +51,8 @@ int main(){
     p1.TakeObject(piccone2);
     p1.TakeObject(piccone3);
     g.spawnMonsterOrObject(&p1);
-
+    finale boss1(&p1);
+    boss1.battleManager();
     /*Queue q=Queue();
     q.enqueue(&p1);
     q.enqueue(&p2);
