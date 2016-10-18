@@ -100,36 +100,46 @@ void finale::LoseScreen(){
 	cout<<"					SEI MORTO"<<endl;
 }
 void finale::HealthBar(int currenthpPlayer,int maxhpPlayer, int currenthpMonster,int maxhpMonster, int playerID){ //20 barrette
-	cout << "                                     " << MonsterName << endl;
-	cout<<'(';
+    cout <<endl<< "                                     " << MonsterName << endl<<" ";
+    for(int g=1; g<=78;g++)cout<<"-";
+    cout<<endl<<'|';
 	int i=1;
 	while(i<=78){
-		if(((78*currenthpMonster)/maxhpMonster)>=i)cout<<"|";
+        if(((78*currenthpMonster)/maxhpMonster)>=i)cout<<"█";
 		else cout<<' ';
 		i++;
-	} // calcola le | in base agli HP attuali tramite una percentuale
-	cout<<')' << endl; // le parentesi le ho messe solo per delimitare la barra della salute
+    }cout<<"|";
+    cout<<endl<<"|";
+    i=1;
+    while(i<=78){
+        if(((78*currenthpMonster)/maxhpMonster)>=i)cout<<"█";
+        else cout<<' ';
+        i++;
+    }// calcola le | in base agli HP attuali tramite una percentuale
+    cout<<'|' << endl<<" "; // le parentesi le ho messe solo per delimitare la barra della salute
+    for(int g=1; g<=78;g++)cout<<"-";
+    cout<<endl<<endl<<endl;
 	cout << "     _______M''''''M____                     ____M''''''''''''M________" << endl;
-	cout << " __/      .        . __/\__            _____/\___  .8M.. .. D:   +\_   \ ___ " << endl;
-	cout << "/ _>'''''''<     __/      \_         /.= . ..   \ . O          .   \  OM.   \"" << endl; // Ho aggiunto un altra " alla fine, altrimenti non finiva il cout
-	cout << "V            \   /            \....,',  .     .  \ .     ..         \    = < \"" << endl; // Ho aggiunto un altra " alla fine, altrimenti non finiva il cout
-	cout << "              \ /_M''''M_      XM______  .  .     .\ .      ____ .  , \ D /   \\" << endl;
-	cout << "               V         \    M.       \________:   \     M /        <_\ |     V" << endl;
-	cout << "                          \  /                \ \___ \   /             \||" << endl;
-	cout << "                           \/..     O .OOO.    \    \,| /               V" << endl;
-	cout << "                          _/.  M,..  ? : . ..   \    X||" << endl;
-	cout << "                        ./      ?...       ..    \    V" << endl;
+    cout << " __/      .        . __/\\__            _____/\\___  .8M.. .. D:   +\\_   \\ ___ " << endl;
+    cout << "/ _>'''''''<     __/      \\_         /.= . ..   \\ . O          .   \\  OM.   \\" << endl; // Ho aggiunto un altra " alla fine, altrimenti non finiva il cout
+    cout << "V            \\   /            \\....,',  .     .  \\ .     ..         \\    = < \\" << endl; // Ho aggiunto un altra " alla fine, altrimenti non finiva il cout
+    cout << "              \\ /_M''''M_      XM______  .  .     .\\ .      ____ .  , \\ D /   \\" << endl;
+    cout << "               V         \\    M.       \\________:   \\     M /        <_\\ |     V" << endl;
+    cout << "                          \\  /                \\ \\___ \\   /             \\||" << endl;
+    cout << "                           \\/..     O .OOO.    \\    \\,| /               V" << endl;
+    cout << "                          _/.  M,..  ? : . ..   \\    X||" << endl;
+    cout << "                        ./      ?...       ..    \\    V" << endl;
 	cout << "                        ( .       N______   N7.   |" << endl;
-	cout << "                         X7  M .  /      \___. . M| " << endl;
-	cout << "                        ( O .. O |           \M  . \"" << endl; // Ho aggiunto un altra " alla fine, altrimenti non finiva il cout (qua è a causa della parentesi)
-	cout << "                         M._____..)           \     | " << endl;
-	cout << "                         \|'''''|/             \   ,|" << endl;
-	cout << "                          \!!!!!/               \ . |" << endl;
-	cout << "                                                 \  |" << endl;
+    cout << "                         X7  M .  /      \\___. . M| " << endl;
+    cout << "                        ( O .. O |           \\M  . \\" << endl; // Ho aggiunto un altra " alla fine, altrimenti non finiva il cout (qua è a causa della parentesi)
+    cout << "                         M._____..)           \\     | " << endl;
+    cout << "                         \\|'''''|/             \\   ,|" << endl;
+    cout << "                          \\!!!!!/               \\ . |" << endl;
+    cout << "                                                 \\  |" << endl;
 	cout << "                                            ^     )Z )" << endl;
-	cout << "                                           | \   /M /" << endl;
-	cout << "                                           | .\_/M /" << endl;
-	cout << "                                            \_____/" << endl;
+    cout << "                                           | \\   /M /" << endl;
+    cout << "                                           | .\\_/M /" << endl;
+    cout << "                                            \\_____/" << endl;
 	i=1;
 	while (i <= att){
         cout << "   ";
