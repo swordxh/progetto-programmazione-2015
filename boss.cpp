@@ -50,9 +50,9 @@ void finale::battleManager(){
 	while (stato==0){
 		if (b!=NULL){
 			HealthBar(p->life(), 100, b->LifePoints(), b->MaxLifePoints(),p->showId()); // gli do gli HP attuali\massimi dei giocatori e del boss, aggiungendo l'ID del giocatore
-		} // se il boss è vivo, vado in HealthBar
+		} // se il boss Ã¨ vivo, vado in HealthBar
 		stato=CalculateDamage(IOManager());
-	}// finchè "stato" = 0 (ovvero i giocatori e il boss sono vivi) io sto dentro il while
+	}// finchÃ¨ "stato" = 0 (ovvero i giocatori e il boss sono vivi) io sto dentro il while
 	if (b!=NULL){
 				HealthBar(p->life(), 100, b->LifePoints(), b->MaxLifePoints(),p->showId());
 			}// in questo caso i giocatori sono morti (sono fuori dal while)
@@ -63,7 +63,7 @@ void finale::battleManager(){
 		LoseScreen(); // game over
 	}
 }
-int finale::IOManager(){ //ritorna il danno del oggetto che si è scelto
+int finale::IOManager(){ //ritorna il danno del oggetto che si Ã¨ scelto
 	cout<<endl;
 	cout<<"Scegli l'oggetto che vuoi usare per colpire il "<<MonsterName<<":";
 	int select=1; // select elenca gli oggetti selezionabili
@@ -73,12 +73,12 @@ int finale::IOManager(){ //ritorna il danno del oggetto che si è scelto
 			select++;
 		} //lo slot non deve essere vuoto
 	}
-	int counter=select; // counter indica l'oggetto col select più alto (in poche parole, l'ultimo)
+	int counter=select; // counter indica l'oggetto col select piÃ¹ alto (in poche parole, l'ultimo)
 	do{
 	cin>>select;
 	}while((select<1) || (select>counter)); // seleziono un oggetto, il valore deve essere compreso tra 1 e counter
 	counter=1; //
-	bool exit=false; //exit è una guardia del while
+	bool exit=false; //exit Ã¨ una guardia del while
 	int i=0;
 	while (!exit){
 		if ((p->showInventory()->slotIsFull(i)) && (select==counter)){
@@ -87,7 +87,7 @@ int finale::IOManager(){ //ritorna il danno del oggetto che si è scelto
 				p->showInventory()->deleteObject(i);
 			}// caso della pozione: a differenza degli altri oggetti (armi), questo viene eliminato, dando 20 HP al giocatore (la pozione ha il campo damage = 0)
 			exit=true; //posso uscire dal while, ho usato l'oggetto
-		}// se l'oggetto è quello selezionato, lo uso
+		}// se l'oggetto Ã¨ quello selezionato, lo uso
 		else if (p->showInventory()->slotIsFull(i)) counter++;
 		i++;
 	}
@@ -109,7 +109,27 @@ void finale::HealthBar(int currenthpPlayer,int maxhpPlayer, int currenthpMonster
 		i++;
 	} // calcola le | in base agli HP attuali tramite una percentuale
 	cout<<')' << endl; // le parentesi le ho messe solo per delimitare la barra della salute
-	//disegno drago (DA FARE)
+	cout << "     _______M''''''M____                     ____M''''''''''''M________" << endl;
+	cout << " __/      .        . __/\__            _____/\___  .8M.. .. D:   +\_   \ ___ " << endl;
+	cout << "/ _>'''''''<     __/      \_         /.= . ..   \ . O          .   \  OM.   \"" << endl; // Ho aggiunto un altra " alla fine, altrimenti non finiva il cout
+	cout << "V            \   /            \....,',  .     .  \ .     ..         \    = < \"" << endl; // Ho aggiunto un altra " alla fine, altrimenti non finiva il cout
+	cout << "              \ /_M''''M_      XM______  .  .     .\ .      ____ .  , \ D /   \\" << endl;
+	cout << "               V         \    M.       \________:   \     M /        <_\ |     V" << endl;
+	cout << "                          \  /                \ \___ \   /             \||" << endl;
+	cout << "                           \/..     O .OOO.    \    \,| /               V" << endl;
+	cout << "                          _/.  M,..  ? : . ..   \    X||" << endl;
+	cout << "                        ./      ?...       ..    \    V" << endl;
+	cout << "                        ( .       N______   N7.   |" << endl;
+	cout << "                         X7  M .  /      \___. . M| " << endl;
+	cout << "                        ( O .. O |           \M  . \"" << endl; // Ho aggiunto un altra " alla fine, altrimenti non finiva il cout (qua Ã¨ a causa della parentesi)
+	cout << "                         M._____..)           \     | " << endl;
+	cout << "                         \|'''''|/             \   ,|" << endl;
+	cout << "                          \!!!!!/               \ . |" << endl;
+	cout << "                                                 \  |" << endl;
+	cout << "                                            ^     )Z )" << endl;
+	cout << "                                           | \   /M /" << endl;
+	cout << "                                           | .\_/M /" << endl;
+	cout << "                                            \_____/" << endl;
 	i=1;
 	while (i <= att){
         cout << "   ";
@@ -132,7 +152,7 @@ void finale::HealthBar(int currenthpPlayer,int maxhpPlayer, int currenthpMonster
 	}
 	cout<<endl;
 }
-int finale::CalculateDamage(int Damage){  //ritorna 0 se sono entrambi vivi 1 se il mostro è morto 2 se il giocatore è morto
+int finale::CalculateDamage(int Damage){  //ritorna 0 se sono entrambi vivi 1 se il mostro Ã¨ morto 2 se il giocatore Ã¨ morto
 	int status=0;
 	if (b!=NULL){
         if ((k % 2) == 0) p->lifeFix(b->speciale1()); // ogni due turni usa l'attacco che colpisce tutti i giocatori (DEVO AVERE LA LISTA PER SCORRERLA)
@@ -143,10 +163,11 @@ int finale::CalculateDamage(int Damage){  //ritorna 0 se sono entrambi vivi 1 se
 			delete b;
 			b=NULL;
 			status=1;
-		} // il boss è morto
+		} // il boss Ã¨ morto
 	}
-	if (p->life()<=0) status=2; // morte di 1 o più giocatori (DEVO AVERE LA LISTA PER CONTROLLARE LA SALUTE DI TUTTI I GIOCATORI)
-	// L'ISTRUZIONE E' DA COMPLETARE: devo distinguere l'eliminazione di uno o più giocatori e il game over (morte di tutti i giocatori)
+	if (p->life()<=0) status=2; // morte di 1 o piÃ¹ giocatori (DEVO AVERE LA LISTA PER CONTROLLARE LA SALUTE DI TUTTI I GIOCATORI)
+	// L'ISTRUZIONE E' DA COMPLETARE: devo distinguere l'eliminazione di uno o piÃ¹ giocatori e il game over (morte di tutti i giocatori)
     k++; // turno finito, passo al successivo
 	return status;
 }
+
