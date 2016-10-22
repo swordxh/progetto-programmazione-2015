@@ -208,7 +208,7 @@ bool Manage::databaseEmpty(){
     }
     return true;
 }
-void Manage::fetchDatabaseObjects(Object* oggettoDelGioco){
+void Manage::fetchDatabaseObjects(Object oggettoDelGioco){
     int j=0;
     if(database==NULL){
         int i=0;
@@ -222,9 +222,10 @@ void Manage::fetchDatabaseObjects(Object* oggettoDelGioco){
     }
     if(j!=6){
         database->oggetto[j]=new Object;
-        database->oggetto[j]=oggettoDelGioco;
+        database->oggetto[j]=&oggettoDelGioco;
     }
 }
+
 
 void Manage::spawnMonsterOrObject(Player* giocatore){
     int die = 0;
