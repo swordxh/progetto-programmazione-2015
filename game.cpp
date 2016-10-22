@@ -433,9 +433,4 @@ void Manage::dropObject(Player* giocatore){
     }
 }
 
-void Manage::setRounds(int n){
-    nRounds=n;
-}
-void Manage::setPlayers(int n){
-    nPlayers=n;
-}
+
