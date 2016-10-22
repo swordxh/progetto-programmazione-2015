@@ -182,8 +182,7 @@ Manage::Manage(){
         n=0;
         l=NULL;
         database=NULL;
-        nPlayers=0;
-        nRounds=0;
+
 }
 
 void Manage::builtQueue(){
