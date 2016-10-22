@@ -27,9 +27,9 @@ int main(){
     Manage g=Manage();
 
     //g.builtQueue();
-    g.fetchDatabaseObjects(&piccone3);
-    g.fetchDatabaseObjects(&piccone2);
-    g.fetchDatabaseObjects(&piccone);
+    g.fetchDatabaseObjects(piccone3);
+    g.fetchDatabaseObjects(piccone2);
+    g.fetchDatabaseObjects(piccone);
     /*g.fetchDatabaseObjects(&piccone);
     g.fetchDatabaseObjects(&piccone);
     g.fetchDatabaseObjects(&piccone);
