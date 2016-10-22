@@ -35,12 +35,12 @@ void Object::setObject(char nome[], int danno){
 Inventory::Inventory(){
     int i=0;
     for (i=0;i<5;i++){
-        slot[i]=0;
+        slot[i]=false;
         oggetto[i]=NULL;
     }
 }
 bool Inventory::slotIsFull(int slotInventario){ //controlla se uno specifico slot dell'inventario è pieno
-        return slot[slotInventario]; //ritorna 1 se è pieno, 0 altrimenti
+    return slot[slotInventario]; //ritorna 1 se è pieno, 0 altrimenti
     }
 int Inventory::AccessObjectFromInventory (int slotInventario){ //accede ad un oggetto dell'inventario
         return oggetto[slotInventario]->Damage(); //ritorna il danno dell'oggetto a cui si è acceduti nell'inventario
@@ -61,8 +61,11 @@ char* Inventory::getName(int slotInventario){
         return oggetto[slotInventario]->showNameObject();
     }
 
+Player::Player(){
+}
+
 Player::Player(int identificatore){ //costruttore player
-        inventario=Inventory();
+        inventario=new Inventory;
         id=identificatore;
         lp=100;
         maxlp=100;
@@ -82,26 +85,29 @@ void Player::lifeFix(int value){ //cambia vita del giocatore in base all'oggetto
         lp=lp-value;
     }
 int Player::useObject(int slotInventary){ //ritorna il danno dell'oggetto scelto tra uno degli oggetti negli slot dell'inventario
-        return inventario.AccessObjectFromInventory(slotInventary);
+        return inventario->AccessObjectFromInventory(slotInventary);
     }
 void Player::TakeObject(Object oggetto){ //inserisce un oggetto nel primo slot libero disponibile, i alla fine conterrà l'informazione della posizione dell'eventuale slot libero
         int i=0;
-        while (inventario.slotIsFull(i)) { //scorro nell'inventario per ricercare lo slot libero
+    if (inventario==NULL) {
+        inventario=new Inventory;
+    }
+        while (inventario->slotIsFull(i)) { //scorro nell'inventario per ricercare lo slot libero
             i++;
         }
         if (i<5) { //se c'è uno slot libero tra i primi quattro posti lo riempio
-            inventario.insertObject(oggetto,i);
+            inventario->insertObject(oggetto,i);
         }
 }
 Inventory* Player::showInventory(){
-        return &inventario;
+        return inventario;
     }
 
 Queue::Queue(){
     q=NULL;
 }
 
-void Queue::enqueue (Player* giocatore){
+void Queue::enqueue (Player giocatore){
 
 
     if (q==NULL) {
@@ -121,19 +127,19 @@ void Queue::enqueue (Player* giocatore){
         nodo->next=q;
         app->next=nodo;
 
-        delete app;
     }
 }
 
-node* Queue::dequeue(Player* giocatore){
+void Queue::dequeue(int idPlayer){
     if (q!=NULL) {
-        if (q->player==giocatore && q->next==q) { //caso in cui c'è solo primo elemento (OK)
+        if ((q->player).showId()==idPlayer && q->next==q) { //caso in cui c'è solo primo elemento (OK)
             node* app=q;
             q=NULL;
             delete app;
+
         }
         else{
-            if (q->player==giocatore) { //caso in cui elimino elemento in testa in una lista di elementi
+            if ((q->player).showId()==idPlayer) { //caso in cui elimino elemento in testa in una lista di elementi
 
                 node* track=q; //faccio puntare ultimo elemento al nuovo primo elemento visto che sto eliminando testa
                 while (track->next!=q) {
@@ -143,7 +149,7 @@ node* Queue::dequeue(Player* giocatore){
                 track=NULL;
                 delete track;
 
-                node* app=new node; //elimino elemento di testa //perchè non funziona senza questa riga di comando?
+                node* app; //elimino elemento di testa //perchè non funziona senza questa riga di comando?
                 app=q;
                 q=q->next;
                 delete app;
@@ -153,11 +159,11 @@ node* Queue::dequeue(Player* giocatore){
                 p=q;
                 bool flag=0;
 
-                while (p->next->player!=giocatore && p->next->next!=q) {
+                while ((p->next->player).showId()!=idPlayer && p->next->next!=q) {
                     p=p->next;
                 }
 
-                if (p->next->player==giocatore) {
+                if ((p->next->player).showId()==idPlayer) {
                     node* app=new node;
                     p->next=p->next->next;
                     app=p->next;
@@ -167,10 +173,10 @@ node* Queue::dequeue(Player* giocatore){
 
         }
     }
-
+}
+Node* Queue::returnHead(){
     return q;
 }
-
 bool Queue::isEmpty(){
     if (q!=NULL) {
         return false;
@@ -182,27 +188,30 @@ Manage::Manage(){
         n=0;
         l=NULL;
         database=NULL;
-
+    defObj.setObject("/0",0);
 }
 
 void Manage::builtQueue(){
-    cout<<"Inserisci un numero di giocatori maggiore di 0: ";
-    cin >> n;
-    if (n<=0)
+    if (nPlayers<=0)
     {
         this->builtQueue();
     }
     else{
         int i=0;
-        for (i=0; i<n; i++){
-            if (l==NULL){
-                l=new Queue;
-            }
-            Player app(i+1); //assegno identificatore al Player
-            this->l->enqueue(&app);
+        l=new Queue;
+        Queue *p=new Queue;
+        for (i=0; i<nPlayers;i++) {
+            Player app=Player(i+1);
+            p->enqueue(app);
         }
+        l=p;
     }
 }
+
+Queue* Manage::returnList(){
+    return l;
+}
+
 bool Manage::databaseEmpty(){
     if (database!=NULL) {
         return false;
@@ -431,5 +440,93 @@ void Manage::dropObject(Player* giocatore){
     }
     }
 }
+
+void Manage::setRounds(int n){
+    nRounds=n;
+}
+void Manage::setPlayers(int n){
+    nPlayers=n;
+}
+
+void Manage::assignDefaultObject(){
+    int i=0;
+    node* app=this->returnList()->returnHead();
+    for (i=0; i<nPlayers; i++) {
+        app->player.TakeObject(defObj);
+        app->player.showInventory()->insertObject(defObj, 0);
+        app=app->next;
+    }
+    app=NULL;
+    delete app;
+    
+}
+void Manage::setDefaultObject(Object oggetto){
+    this->defObj=oggetto;
+}
+void Manage::startGame(){
+    int nplayers=0;
+    int nrounds=0;
+    bool error=true;
+    int roundsCounter=0;
+    int appDeath=0;
+    
+    cout<<"Inserisci numero giocatori: ";
+    cin>>nplayers;
+    cout<<endl;
+    this->setPlayers(nplayers);
+    
+    cout<<"Inserisci numero rounds per giocatore: ";
+    cin>>nrounds;
+    cout<<endl;
+    this->setRounds(nplayers);
+    
+    this->builtQueue();
+    this->assignDefaultObject();
+    node* app=this->returnList()->returnHead();
+    while (!(this->returnList())->isEmpty() && roundsCounter<nRounds){
+        //stampa mappa
+        roundsCounter++;
+        node* app=this->returnList()->returnHead();
+        int i=0;
+        for (i=0; i<nPlayers; i++) {
+            cout << "Giocatore "<<app->player.showId()<<" fai la tua mossa! [W]=Nord, [S]=sud, [A]=ovest, [D]=est"<<endl;
+            //stampa mappa
+            //cambia posizione giocatore
+            this->spawnMonsterOrObject(&app->player); //battaglia o trova oggetto
+            if(app->player.life()<=0){ //Se giocatore è morto lo elimino dalla lista
+                l->dequeue(app->player.showId());
+            }
+            app=app->next;
+        }
+    }
+    app=NULL;
+    delete app;
+    
+    //SPAWN MOSTRO
+    
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
