@@ -1,0 +1,65 @@
+
+
+requests:::
+@ ci si sposta con wasd:  w=nord, a=west, s=sud, d=est---- NEL MAINoGIOCO serve CONTROLLARE CHE DALLA CONSOLE SIANO EFFETTIVAMENTE STATI PASSATI SOLO wasd,
+   se cercano di passare qulacos'altro stampategli qualcosa a video..
+
+@(controllate che il numero di giocatori sia almeno 1!!!)
+
+@[__si crea un oggetto di tipo Map, e si accede alle funzioni con nome_Map_creata.funzione(parametri)__]
+  (attenti, Map con la maiuscola, con la minuscola è un'altra roba del c++)
+  (o se volete fare ptr va bene uguale, poi chiamate con -> anzichè con . =))
+ ------> potete vedere un esempio di chiamate della mappa nel main di prova che è presente in provmappa.cpp!
+
+@ headerstanza.h andrà incluso nel .h del player vero e nel .cpp del player vero,
+  mi serve infatti che il player vero abbia un campo che è un [puntatore alla stanza dove si trova][sonoqui], con relativo metodo per leggerlo e aggiornarlo,
+  e magari [nel costruttore del player] serve che sonoqui venga inizializzato a 0,0 (io fin ora per prova l'ho messo in 0,0 [fuori] dal costruttore-del-player-finto)
+ (-----> come riferimento ho caricato il mio player finto che potete vedere in taitleheaderplayer e taitlesourceplayer)
+
+
+
+
+explain::::
+@ source della mappa e header della mappa per ora sono insieme in provmappa.cpp che così ci si districa meglio per il debug, poi li separerò
+  (e quando lo separo [__rimuovo anche un po' di commenti utili al debug ma non a passare l'esame__]..)
+
+@ (se non capite cosa fa pl_chars non preoccupatevi che tanto poi ve lo spiego io! tanto è solo grafica e quel pezzo comunque funziona benissimo >B])
+
+@ la mappa viene inizializzata come oggetto della classe Map, con xmin ymin ymax, pl_chars e
+ lista di stanze con solo la stanza 0,0, tutti i ptr a NULL e tutti gli ID (SEMPLICI INTERI) dei giocatori lì,
+ ogni player conserva un ptr alla stanza in cui è, questi vanno inizializzati PRIMA DI INIZIARE I TURNI e DOPO AVER CREATO LA MAPPA, così da
+ mandarli [nella 0,0 vera] attraverso il [ptr alla testa della lista_stanze della mappa] (aka [SThead], letto con getST())
+ (da notare che SThead punta a un nodo che ha campo room e campo next)
+  (-------> vedi esempio nel main di prova di provmappa.cpp che si capisce meglio!)
+
+@ new_direction prende la direzione e il giocatore che si sta spostando, scopre DA DOVE ci si sta spostando leggendo sonoqui del palyer passato,
+  controlla se occorre creare una stanza nuova, se serve la crea e aggiorna i puntatori tra le varie stanze, e
+  (in teoria, perchè non sempre va)
+  mette l'id del giocatore nella stanza nuova, lo toglie dalla vecchia e aggiorna sonoqui del giocatore
+
+@ stampa fa:
+   PER OGNI RIGA{
+      cerca le stanze con quella y e se le tiene in una provvisory_SymbolTable (provv_ST)
+      le riordina sulla base della x
+      le stampa, con attenzione ai buchi perchè risultino poi incolonnate bene
+  }
+
+@ attenzione, in questi codici ho tante liste_players ma 
+  -------> nessuna lista di VERI GIOCATORI, E [__ALLA MAPPA NON SERVE!!!!!__]
+  LA MAPPA PRENDE UN GIOCATORE PER VOLTA, UNA LISTA DI VERI GIOCATORI SERVE PER GESTIRE I TURNI, MA NON ALLA MAPPA =)
+
+
+
+
+
+debug mappa ^^'::::
+vedi screenshot: la stampa va a capo finita la shell ma pare funzionare bene,,è lo spostamento dei giocatori che non va
+(pls(di ogni stanza) è il ptr alla testa della LISTA DI INTERI che ogni stanza ha, è un semplice elenco dei presenti che serve per stamparli)
+la add_player della stanza non ritorna il ptr alla testa, ma ha sempre funzionato perchè riesce a vedere pls e aggiornarlo direttamente,
+ il problema CREDO che sia più tra i puntatori delle stanze e dei giocatori(quelli finti provvisori di taitleheaderplayer,
+ che comunque per i campi che stiamo usando qui è come se fossero quelli veri del gioco)..
+nel main di prova: 
+quando ne muovo uno, non lo manda indietro in stanze già create,,
+quando ne muovo 7, allo spostamento del 7. crasha sempre
+e si vede che NON AGGIORNA SONOQUI, è ancora da sistemare
+
