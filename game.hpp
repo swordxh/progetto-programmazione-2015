@@ -85,6 +85,8 @@ protected:
     int n;
     Queue *l;
     databaseObject* database;
+    int nPlayers;
+    int nRounds;
     //map
 public:
     Manage();
@@ -93,5 +95,7 @@ public:
     void spawnMonsterOrObject(Player* giocatore);
     void dropObject(Player* giocatore);
     bool databaseEmpty();
+    void setRounds(int n);
+    void setPlayers(int n);
 };
 #endif /* GAME_HPP_ */
