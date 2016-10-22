@@ -1,52 +1,38 @@
-#include "boss.hpp"
-using namespace std;
+/*
+ * battle.hpp
+ *
+ *  Created on: 25 Sep 2016
+ *      Author: swordxh
+ */
 
-boss::boss(){
-	strcpy(name,"Drago\0"); // nome
-	MaxHp= (n * 100) * z; // "n" = numero giocatori, "z" = fattore che moltiplica vita
-	Hp=MaxHp;
-	damagest = 20; // attacco standard
-	damage1 = 10; // attacco che colpisce tutti i giocatori
-	damage2 = 100; // attacco mortale
-}
-char *boss::GetName(){
-	return name;
-} // da il nome del boss
-void boss::GotHit(int dmg){
-	Hp=Hp-dmg;
-} // il boss subisce i danni del giocatore
-int boss::getDmg(){
-	return damagest;
-} // il boss usa l'attacco standard
-int boss::LifePoints(){
-	return Hp;
-} // HP attuali del boss
-int boss::MaxLifePoints(){
-	return MaxHp;
-} // HP massimi del boss
-int boss::speciale1(){
-	return damage1;
-} // il boss usa l'attacco che colpisce tutti i giocatori
-int boss::speciale2(){
-	return damage2;
-} // il boss usa l'attacco mortale
-finale::finale(Player *p_curr){
-    p = p_curr; // prende il giocatore dalla lista (DA IMPLEMENTARE)
-	b = NULL;
-	MonsterName[0]='\0';
-	k = 1; // Iniziano i turni
-}
-void finale::battleManager(){
-    if (b == NULL) {
-        b = new boss();
-        strcpy(MonsterName, b->GetName());
-    }// inizializzo il boss
-	int stato=0; // Inizia la battaglia
-	cout<<"... La situazione e' fin troppo tranquilla..." << endl;
-	cout << "Nessun nemico..." << endl;
-	cout << "Nessun sinistro rumore di passi..." << endl;
-	cout << "Come se tutto cio' fosse la quiete prima della tempesta..." <<endl;
-	cout<<endl<<endl<<endl<<"Il "<<MonsterName<<" ti attacca, inizi cosi a difenderti."<<endl;
+#ifndef BATTLE_HPP_
+#define BATTLE_HPP_
+
+#include "game.hpp"//da eliminare
+#include "monster.hpp"
+
+class battle{
+protected:
+	Player *p;
+    Manage *manage;
+	Zombie *romero;
+	Vampire *dracula;
+	Spider *spiderman;
+	char MonsterName[10];
+	const int potionHP=30;
+public:
+    battle(Player *p_curr, Manage *man);
+	void battleManager();
+	void getRandomMonster();
+	int IOManager();
+	int CalculateDamage(int Damage);
+	void WinScreen();
+	void LoseScreen();
+	void HealthBar(int currenthpPlayer,int maxhpPlayer, int currenthpMonster,int maxhpMonster, int playerID);
+};
+
+#endif /* BATTLE_HPP_ */
+
 	while (stato==0){
 		if (b!=NULL){
 			HealthBar(p->life(), 100, b->LifePoints(), b->MaxLifePoints(),p->showId()); // gli do gli HP attuali\massimi dei giocatori e del boss, aggiungendo l'ID del giocatore
