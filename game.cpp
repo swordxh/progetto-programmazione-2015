@@ -240,8 +240,11 @@ void Manage::spawnMonsterOrObject(Player* giocatore){
         int count=0;
         
         while (database->oggetto[die]==NULL && count<6 ) {
-            die++;
-            count++;
+                if (die==5){
+                        die=0;
+                }
+                else die++;
+                count++;
         }
         
         bool error=true;
@@ -337,8 +340,11 @@ void Manage::dropObject(Player* giocatore){
     die = (rand() % 5) +1; //avendo 6 oggetti faccio uscire un numero tra 1 e 6 per selezionare un oggetto a caso da database oggetti
     int count=0;
     while (database->oggetto[die]==NULL && count<6 ) {
-        die++;
-        count++;
+            if (die==5){
+            die=0;
+            }
+            else die++;
+            count++;
     }
     bool error=true;
     int risposta=0;
@@ -422,4 +428,11 @@ void Manage::dropObject(Player* giocatore){
         }
     }
     }
+}
+
+void Manage::setRounds(int n){
+    nRounds=n;
+}
+void Manage::setPlayers(int n){
+    nPlayers=n;
 }
