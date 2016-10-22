@@ -4,14 +4,14 @@
 #include <unistd.h>
 #include "game.hpp"
 
-const int n = 1, k = 1, z = 1.5, att = 1; // n indica il numero dei giocatori, k aumenta con l'avanzare dei turni, z è il moltiplicatore per la vita del boss, att il giocatore attuale
+const int n = 1, k = 1, z = 1.5, att = 1; // n indica il numero dei giocatori, k aumenta con l'avanzare dei turni, z Ã‹ il moltiplicatore per la vita del boss, att il giocatore attuale
 
 class boss{
 protected:
 	int MaxHp; //HP massimi
 	int Hp; // HP attuali
 	char name[10];// nome
-	int damagest, damage1, damage2; // damagest è l'attacco standard, damage1 quello che attacca tutti i giocatori, damage2 quello che uccide istantaneamente il giocatore con meno vita
+	int damagest, damage1, damage2; // damagest Ã‹ l'attacco standard, damage1 quello che attacca tutti i giocatori, damage2 quello che uccide istantaneamente il giocatore con meno vita
 public:
 	boss(); // costruttore
 	char *GetName(); // da il nome del boss
@@ -27,7 +27,7 @@ class finale{
 protected:
     Player *p;
     boss *b;
-    int k; // per ciclicità attacchi
+    int k; // per ciclicitâ€¡ attacchi
     char MonsterName[10]; // nome boss
 public:
 	finale(Player *p_curr); // costruttore
