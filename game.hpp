@@ -89,7 +89,7 @@ protected:
 public:
     Manage();
     void builtQueue();
-    void fetchDatabaseObjects(Object *oggettoDelGioco);
+    void fetchDatabaseObjects(Object oggettoDelGioco);
     void spawnMonsterOrObject(Player* giocatore);
     void dropObject(Player* giocatore);
     bool databaseEmpty();
