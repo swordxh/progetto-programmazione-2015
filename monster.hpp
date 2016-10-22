@@ -1,49 +1,119 @@
 /*
- * monster.hpp
+ * monster.cpp
  *
  *  Created on: 26 Sep 2016
  *      Author: swordxh
  */
+#include "monster.hpp"
 
-#ifndef MONSTER_HPP_
-#include "game.hpp" //da eliminare
+monster::monster(){
+	name[0]='\0';
+	MaxHp=0;
+	Hp=MaxHp;
+	damage=0;
+}
 
-#define MONSTER_HPP_
+Vampire::Vampire(){
+	strcpy(name,"Vampiro\0");
+	MaxHp=40;
+	Hp=MaxHp;
+	damage=5;
+}
 
-class monster{
-protected:
-	int MaxHp;
-	int Hp;
-	char name[10];
-	int damage;
+Spider::Spider(){
+	strcpy(name,"Ragno\0");
+	MaxHp=25;
+	Hp=MaxHp;
+	damage=15;
+}
 
-public:
-	monster();
-	char* GetName();
-	int getDmg();
-	void GotHit(int dmg);
-	int LifePoints();
-	int MaxLifePoints();
+Zombie::Zombie(){
+	strcpy(name,"Non-Morto\0");
+	MaxHp=30;
+	Hp=MaxHp;
+	damage=8;
+}
 
-};
+char* monster::GetName(){
+	return name;
+}
 
-class Vampire:public monster{
-public:
-	Vampire();
-	int getDmg();
-};
+void monster::GotHit(int dmg){
+	Hp=Hp-dmg;
+}
 
-class Zombie:public monster{
-public:
-	Zombie();
-	void GotHit(int dmg);
-};
+int monster::getDmg(){
+	return damage;
+}
 
-class Spider:public monster{
-public:
-	Spider();
-	int getDmg(Player* p1);
-};
+int monster::LifePoints(){
+	if (Hp>=0) return Hp;
+	else return 0;
+}
+
+int monster::MaxLifePoints(){
+	if (Hp>MaxHp) MaxHp=Hp;
+	return MaxHp;
+}
+
+int Vampire::getDmg(){
+	int dice=0;
+	srand(time(0));
+	dice = (rand()%100)+1;
+	if (dice<=30){
+		GotHit(-(damage));
+		cout<<"Con un morso doloroso, il "<<name<<", ti succhia via del sangue, restituendogli parte della vita"<<" (+"<<damage<<")"<<endl;
+	}
+	return monster::getDmg();
+}
+
+void Zombie::GotHit(int dmg){
+	int dice=0;
+	srand(time(0));
+	dice = (rand()%100)+1;
+	if (dice<=30){
+		Hp=Hp-(dmg/2);
+		cout<<""<<endl;
+		cout<<"Il tuo colpo ha avuto poca efficacia sul "<<name<<", capisci infatti di avergli fatto la metà del danno possibile"<< " (dmg "<<dmg/2<<")"<<endl;
+	}
+	else monster::GotHit(dmg);
+}
+
+int Spider::getDmg(Player* p1){
+	int dice=0;
+	bool hasobj=false;
+	int firsthit;
+	srand(time(0));
+	dice = (rand()%100)+1;
+	if (dice<=45){
+		for (int i=1;i<5;i++){
+			if (p1->showInventory()->slotIsFull(i)){
+			hasobj=true;
+			firsthit=i;
+			}
+		}
+		if (hasobj){
+			int fermacpu=0;
+			do {
+				srand(time(0));
+				dice = (rand()%4)+1;
+				fermacpu++;
+			}while ((!(p1->showInventory()->slotIsFull(dice))) && fermacpu<=100);
+			cout<<"Il " <<name<< ", con la sua lesta ragnatela, arpiona il tuo zaino e ti ruba un oggetto!";
+			if (fermacpu<=100){
+				cout<<" ("<< p1->showInventory()->getName(dice) << ")"<<endl;
+				p1->showInventory()->deleteObject(dice);
+			}
+			else {
+				cout<<" ("<< p1->showInventory()->getName(firsthit) << ")"<<endl;
+				p1->showInventory()->deleteObject(firsthit);
+			}
+		}
+	}
+	else return monster::getDmg();
+	return 0;
+}
 
 
-#endif /* MONSTER_HPP_ */
+
+
