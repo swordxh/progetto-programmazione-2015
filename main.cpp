@@ -10,42 +10,17 @@
 #include "boss.hpp"
 
 int main(){
-    Inventory a;
-    Player p1(1);
-    Player p2(2);
-    Player p3(3);
-    char bach[16];
-    strcpy(bach, "bacchetta");
-    char ex[16];
-    strcpy(ex, "excalibur");
-    char poi[16];
-    strcpy(poi, "potion");
-    Object piccone(bach,10);
-    Object piccone2(ex,1);
-    Object piccone3(poi,0);
-
+    Object spada=Object("spada",30);
+    Object piccone=Object("piccone",10);
     Manage g=Manage();
-
-    //g.builtQueue();
-    g.fetchDatabaseObjects(piccone3);
-    g.fetchDatabaseObjects(piccone2);
-    g.fetchDatabaseObjects(piccone);
-    /*g.fetchDatabaseObjects(&piccone);
-    g.fetchDatabaseObjects(&piccone);
-    g.fetchDatabaseObjects(&piccone);
-    g.fetchDatabaseObjects(&piccone);
-    p1.TakeObject(piccone2);
-    p1.TakeObject(piccone2);
-    p1.TakeObject(piccone2);
-    p1.TakeObject(piccone2);
-    p1.TakeObject(piccone2);
-    p1.TakeObject(piccone2);
-    p1.TakeObject(piccone2);
-    p1.TakeObject(piccone2);
-
-    g.spawnMonsterOrObject(&p1);
-
-*/
+    
+    g.setDefaultObject(piccone); //carico oggetto di base
+    g.fetchDatabaseObjects(spada);
+    g.fetchDatabaseObjects(spada);
+    
+    g.startGame();
+    return 0;
+}
 
     p1.TakeObject(piccone);
     p1.TakeObject(piccone2);
