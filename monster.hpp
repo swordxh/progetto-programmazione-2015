@@ -1,52 +1,53 @@
 /*
- * monster.cpp
+ * monster.hpp
  *
  *  Created on: 26 Sep 2016
  *      Author: swordxh
  */
-#include "monster.hpp"
 
-monster::monster(){
-	name[0]='\0';
-	MaxHp=0;
-	Hp=MaxHp;
-	damage=0;
-}
+#ifndef MONSTER_HPP_
+#include "game.hpp" //da eliminare
 
-Vampire::Vampire(){
-	strcpy(name,"Vampiro\0");
-	MaxHp=40;
-	Hp=MaxHp;
-	damage=5;
-}
+#define MONSTER_HPP_
 
-Spider::Spider(){
-	strcpy(name,"Ragno\0");
-	MaxHp=25;
-	Hp=MaxHp;
-	damage=15;
-}
+class monster{
+protected:
+	int MaxHp;
+	int Hp;
+	char name[10];
+	int damage;
 
-Zombie::Zombie(){
-	strcpy(name,"Non-Morto\0");
-	MaxHp=30;
-	Hp=MaxHp;
-	damage=8;
-}
+public:
+	monster();
+	char* GetName();
+	int getDmg();
+	void GotHit(int dmg);
+	int LifePoints();
+	int MaxLifePoints();
 
-char* monster::GetName(){
-	return name;
-}
+};
 
-void monster::GotHit(int dmg){
-	Hp=Hp-dmg;
-}
+class Vampire:public monster{
+public:
+	Vampire();
+	int getDmg();
+};
 
-int monster::getDmg(){
-	return damage;
-}
+class Zombie:public monster{
+public:
+	Zombie();
+	void GotHit(int dmg);
+};
 
-int monster::LifePoints(){
+class Spider:public monster{
+public:
+	Spider();
+	int getDmg(Player* p1);
+};
+
+
+#endif /* MONSTER_HPP_ */
+
 	if (Hp>=0) return Hp;
 	else return 0;
 }
