@@ -317,7 +317,7 @@ int main (){
     //-------> NESSUNA lista di VERI GIOCATORI, E [__ALLA MAPPA NON SERVE!!!!!__]
     //LA MAPPA PRENDE UN GIOCATORE PER VOLTA!! UNA LISTA DI VERI GIOCATORI SERVE PER GESTIRE I TURNI, MA NON ALLA MAPPA!
 
-    cout<<"\nprova con singolo giocatore, non funziona se cerco di mandarlo in una stanza già esistente..\n";
+    cout<<"\nprova con singolo giocatore\n";
     cout<<"scegliere wasd\n";
     for (int i=1; i<=10; i++){ //sposta 10 volte p1
         char di; cin>>di;
@@ -327,25 +327,23 @@ int main (){
         cout<<"\n------------------------------------------------------------------\n";
     }
 
-    cout<<"\nora se ne spostano 7 a turno\n";
-    cout<<"ma crasha prima dell'inizio del 2.turno per ciascuno\n";
+    cout<<"\nora se ne spostano 7 a turno\n";    
     cout<<"scegliere wasd\n";
 
     player arrei[7]; //array di giocatori
-    arrei[1]=p1;
-    arrei[2]=p2;
-    arrei[3]=p3;
-    arrei[4]=p4;
-    arrei[5]=p5;
-    arrei[6]=p6;
-    arrei[7]=p7;
+    arrei[0]=p1;
+    arrei[1]=p2;
+    arrei[2]=p3;
+    arrei[3]=p4;
+    arrei[4]=p5;
+    arrei[5]=p6;
+    arrei[6]=p7;
 
     for (int due=1; due<=2; due++){ //sposta 2 volte ciascuno
-        for (int i=1; i<=7; i++){
+        for (int i=0; i<=6; i++){
             char dirr; cin>>dirr;
             cout<<"\n----------------start stringhe di controllo-------------------------\n";
-            mappa.new_direction(dirr, arrei[i]);
-            //non giurerei che funzioni l'array impostato così, secondo me non aggiorna il player..
+            mappa.new_direction(dirr, arrei[i]);            
             mappa.stampa();
             cout<<"\n------------------------------------------------------------------\n";
         }
