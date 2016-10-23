@@ -4,13 +4,13 @@
 
 #include "taitleheaderplayer.h"
 #include "taitlesourceplayer.cpp"
-///QUESTO è UN GIOCATORE FINTO con solo int id e puntatore alla stanza,
-/// poi ci andrà quello vero, questo è quello con cui ho fatto le prove =)
+///QUESTO Ã¨ UN GIOCATORE FINTO con solo int id e puntatore alla stanza,
+/// poi ci andrÃ  quello vero, questo Ã¨ quello con cui ho fatto le prove =)
 
 #include "headerstanza.h"
 #include "sourcestanza.cpp"
 
-#include "numCifre.cpp" //funzione di utilità
+#include "numCifre.cpp" //funzione di utilitÃ 
 
 
 struct lista_stanze {
@@ -43,10 +43,10 @@ class Map{
             }
             pl_chars = giggi;
             //conteggia quanto spazio serve per la stampa degli id accanto alle stanze
-            //(e affinchè stiano ben incolonnati!)
-            //(il +1 è per spampare poi un "." tra un giocatore e l'altro)
-            //per esempio: questa è una stanza " [ ] .1.10      "
-            //ecco, quanti spazi lasciare dopo il 10 si conterà facendo [ pl_chars - 5 ]
+            //(e affinchÃ¨ stiano ben incolonnati!)
+            //(il +1 Ã¨ per spampare poi un "." tra un giocatore e l'altro)
+            //per esempio: questa Ã¨ una stanza " [ ] .1.10      "
+            //ecco, quanti spazi lasciare dopo il 10 si conterÃ  facendo [ pl_chars - 5 ]
 
             SThead = new lista_stanze;
             SThead->next = NULL;
@@ -69,17 +69,17 @@ class Map{
         } ///aggiungitore di stanze che ritorna testa
 
         void SThead_insert (int ics, int ipsi){
-            // vede SThead perchè è un campo della classe
+            // vede SThead perchÃ¨ Ã¨ un campo della classe
             //e aggiorna la lista senza bisogno di ritornare
             ptr_listast tmp = new lista_stanze;
             tmp->room = stanza(ics,ipsi); //costruisce nel campo room una stanza con ics e ipsi e tutti NULL
             tmp->next = SThead ;
             SThead = tmp;
-        } ///aggiungitore di stanze non ritornante (aggiorna SThead, che è un campo della classe, resta visibile)
+        } ///aggiungitore di stanze non ritornante (aggiorna SThead, che Ã¨ un campo della classe, resta visibile)
         //con add_player ha funzionato..
 
         ///l'aggiornamento di xmin ymin ymax lo faccio nella costruzione di nuova stanza complessiva,
-        ///questa è solo la funzione di inserimento in lista
+        ///questa Ã¨ solo la funzione di inserimento in lista
 
         ///utility
         int absh (int x){
@@ -93,15 +93,15 @@ class Map{
             ///NON E' CREATA PER LAVORARE SULLA LISTA_STANZE DELLA MAPPA
             ///MA SU [___LISTE PROVVISORIE CREATE riga per riga APPOSITAMENTE PER OGNI STAMPA___]
             ptr_listast p; //scorre di volta in volta
-            ptr_listast ultimo; //evita di riconfrontare quelli già ordinati, puntando il primo dei già-ordinati
+            ptr_listast ultimo; //evita di riconfrontare quelli giÃ  ordinati, puntando il primo dei giÃ -ordinati
             int flag;
             ultimo = NULL;
             flag = 1;
             while ( flag == 1 ){
                 p = headdy; //p scorre tutte le volte la lista, dalla testa fino ad [ultimo]
-                flag = 0; //flag tornerà 1 se troverò almeno una stanza con x minore della precedente
-                //se flag non torna a 1 vuol dire che ho già ordinato tutto
-                //e al giro dopo non entrerò nel while grosso e andrò a ritornare la testa
+                flag = 0; //flag tornerÃ  1 se troverÃ² almeno una stanza con x minore della precedente
+                //se flag non torna a 1 vuol dire che ho giÃ  ordinato tutto
+                //e al giro dopo non entrerÃ² nel while grosso e andrÃ² a ritornare la testa
                 while (p->next != ultimo) {
                     if ( p->room.getx() > (p->next)->room.getx() ) { //se ho trovato una stanza con x minore della precedente
                         //scambio LE STANZE a cui puntano p e p->next
@@ -109,25 +109,25 @@ class Map{
                         p->room = (p->next)->room ;
                         (p->next)->room = tmp;
                         //scambiate!
-                        flag = 1; //"c'è ancora da fare ordine"
+                        flag = 1; //"c'Ã¨ ancora da fare ordine"
                     }//fine caso "c'era da scambiare"
                     p = p->next;
                 }//ho scorso fino all'[ultimo attuale], ora aggiorno [ultimo]
                 ultimo = p; //ho sistemato tutti fino a ultimo
-            }//fine while grosso, falg è rimasto 0, era già tutto in ordine
+            }//fine while grosso, falg Ã¨ rimasto 0, era giÃ  tutto in ordine
             return(headdy);
         }///fine reorder
 
 
         void new_direction (char dir, player& g1){
-            ///precondition: char è wasd
+            ///precondition: char Ã¨ wasd
             stanza* stvecchia = g1.getsonoqui();
             int ix = stvecchia->getx();
             int iy = stvecchia->gety();
             cout<<"\nstanza vecchia is "<< ix<< iy<< "\n"; //cout di prova
 
             bool crea = true;
-            ///i ptr vengono aggiornati alla creazione della stanza, quindi se un ptr è!=NULL li c'è già una stanza
+            ///i ptr vengono aggiornati alla creazione della stanza, quindi se un ptr Ã¨!=NULL li c'Ã¨ giÃ  una stanza
             if ( ( ( dir=='w') && (stvecchia->getnord()!=NULL) ) ||
                  ( ( dir=='s') && (stvecchia->getsud()!=NULL) ) ||
                  ( ( dir=='d') && (stvecchia->getest()!=NULL) ) ||
@@ -161,10 +161,10 @@ class Map{
                 int xu = SThead->room.getx(); //x della stanza nuova
                 int yu = SThead->room.gety(); //y della stanza nuova
                 //cerco le CONFINANTI ALLA STANZA NUOVA scorrendo con gigi,
-                //e, quando ne trovo una, aggiorno sia LA STANZA PUNTATA DA GIGI (TRA LE QUALI CI SARà STVECCHIA)
-                //sia LA NUOVA, IN QUELLA DIREZIONE (LA NUOVA è SEMPRE IN TESTA, SThead->room.funzionipersmagheggiare)
+                //e, quando ne trovo una, aggiorno sia LA STANZA PUNTATA DA GIGI (TRA LE QUALI CI SARÃ  STVECCHIA)
+                //sia LA NUOVA, IN QUELLA DIREZIONE (LA NUOVA Ã¨ SEMPRE IN TESTA, SThead->room.funzionipersmagheggiare)
                 while (gigi != NULL){
-                        //(la direzione non conta più!)
+                        //(la direzione non conta piÃ¹!)
                         if( ( gigi->room.getx() == xu ) && ( gigi->room.gety() == yu+1 ) ){
                             //trovata stanza a NORD della nuova
                             gigi->room.writesud(&SThead->room);
@@ -188,32 +188,44 @@ class Map{
                         gigi = gigi->next;
                 }///fine messa-a-posto dei ptr
                 //cout<<"ptr a postoss\n";
-            }//fine caso [stanza NON già presente] aka (if (crea))
+            }//fine caso [stanza NON giÃ  presente] aka (if (crea))
 
-            ///ora spostare il player
-            SThead->room.add_player(g1.getid());
-            cout<<"add_player fatta!! qui va!\n";
-
+             ///ora spostare il player
             ptr_listapl satana;
             satana = stvecchia->rimuv_player (g1.getid(), stvecchia->get_pls()) ;
+            cout<<"\nsatana all'opera\n";
             stvecchia->write_pls(satana);
             cout<<"rimozione player fatta!! qui va!\n";
 
-            g1.writesonoqui(&SThead->room);//va all'INDIRIZZO DELLA STANZA, anche se SThead si sposta non dovrebbe segiurlo..
+
+            //SThead->room.add_player(g1.getid()); //cosÃ¬ lo metteva nella stanza in testa
+            if (dir=='w'){ stvecchia->getnord()->add_player(g1.getid()) ; }
+            else if (dir=='a'){ stvecchia->getwest()->add_player(g1.getid()) ; }
+            else if (dir=='s'){ stvecchia->getsud()->add_player(g1.getid()) ; }
+            else if (dir=='d'){ stvecchia->getest()->add_player(g1.getid()) ; }
+            cout<<"add_player fatta!! qui va!\n";
+
+            //g1.writesonoqui(&SThead->room); //cosÃ¬ lo metteva nella stanza in testa
+            if (dir=='w'){ g1.writesonoqui(stvecchia->getnord()) ;}
+            else if (dir=='a'){ g1.writesonoqui(stvecchia->getwest()) ;}
+            else if (dir=='s'){ g1.writesonoqui(stvecchia->getsud()) ;}
+            else if (dir=='d'){ g1.writesonoqui(stvecchia->getest()) ;}
+            ///sonoqui va all'INDIRIZZO DELLA STANZA
             cout<<"writesonoqui fatta!! qui va!\n";
+
         }///fine new_direction
 
         void stampa (){
             cout<<"\n\n"; //inizio mappa un po' staccato da (qualunque cosa ci fosse prima)
             cout<<"\nxmin "<<xmin<<"\nymax "<<ymax<<"\nymin "<<ymin<<"\n\n";
             for ( int riga = ymax ; riga >= ymin ; riga-- ){///per ogni riga
-                ptr_listast scorro = SThead; //lo vede, è un campo della classe
+                ptr_listast scorro = SThead; //lo vede, Ã¨ un campo della classe
                 while (scorro->room.gety() != riga) { scorro = scorro->next; }
-                //ora scorro->room è la prima stanza trovata che ha y==riga
+                //ora scorro->room Ã¨ la prima stanza trovata che ha y==riga
                 ptr_listast provv_ST = new lista_stanze; ///provv_ST tiene copie delle stanze utili per la stampa di quella riga
                 provv_ST->room = scorro->room;
                 provv_ST->next = NULL;
-                //è stata aggiunta la prima stanza, ora cerco le altre
+                //Ã¨ stata aggiunta la prima stanza, ora cerco le altre
                 scorro = scorro->next; //se no mette 2 volte la prima trovata
                 while ( scorro != NULL ){
                     if ( scorro->room.gety()==riga ){ //se ho trovato un'altra stanza con la stessa y
@@ -244,15 +256,15 @@ class Map{
                     prow1=prow1->next;
                 }*/
                 ///ora manca solo stampare le stanze coi vari spazi, confrontando con xmin e tra di loro le x
-                int j = xmin; //è o 0 o negativo
+                int j = xmin; //Ã¨ o 0 o negativo
                 ptr_listast provv = provv_ST; //scorro con provv
                 //stampata una stanza, passo alla successiva, senza bisogno di cancellare dalla provv_ST quella stampata!
-                while (provv!=NULL){ ///finchè non ho finito le stanze su quella riga
-                    // uso valore assoluto (absh mia) perchè fa chiarezza =)
-                    ///gap (che è int positivo) indica quante "stanze" lasciare affinchè l'incolonnamento sia comprensibile
+                while (provv!=NULL){ ///finchÃ¨ non ho finito le stanze su quella riga
+                    // uso valore assoluto (absh mia) perchÃ¨ fa chiarezza =)
+                    ///gap (che Ã¨ int positivo) indica quante "stanze" lasciare affinchÃ¨ l'incolonnamento sia comprensibile
 
-                    ///la stanza è "  [ ] " ==2sp.prima,1inmezzo,1dopo, "SPAZIO PARETI"
-                    ///più la parte dei giocatori (piena o vuota o vie di mezzo che sia) "SPAZIO PL"
+                    ///la stanza Ã¨ "  [ ] " ==2sp.prima,1inmezzo,1dopo, "SPAZIO PARETI"
+                    ///piÃ¹ la parte dei giocatori (piena o vuota o vie di mezzo che sia) "SPAZIO PL"
                     if ( j!= provv->room.getx() ) { //se ci sono "stanze buche" da lasciare
                         int gap = absh ( j - provv->room.getx() );
                         for (int i = 1; i<= gap; i++){ //per ogni "stanza buca" da lasciare
@@ -305,7 +317,7 @@ int main (){
     //-------> NESSUNA lista di VERI GIOCATORI, E [__ALLA MAPPA NON SERVE!!!!!__]
     //LA MAPPA PRENDE UN GIOCATORE PER VOLTA!! UNA LISTA DI VERI GIOCATORI SERVE PER GESTIRE I TURNI, MA NON ALLA MAPPA!
 
-    cout<<"\nprova con singolo giocatore, non funziona se cerco di mandarlo in una stanza già esistente..\n";
+    cout<<"\nprova con singolo giocatore, non funziona se cerco di mandarlo in una stanza giÃ  esistente..\n";
     cout<<"scegliere wasd\n";
     for (int i=1; i<=10; i++){ //sposta 10 volte p1
         char di; cin>>di;
@@ -333,7 +345,7 @@ int main (){
             char dirr; cin>>dirr;
             cout<<"\n----------------start stringhe di controllo-------------------------\n";
             mappa.new_direction(dirr, arrei[i]);
-            //non giurerei che funzioni l'array impostato così, secondo me non aggiorna il player..
+            //non giurerei che funzioni l'array impostato cosÃ¬, secondo me non aggiorna il player..
             mappa.stampa();
             cout<<"\n------------------------------------------------------------------\n";
         }
