@@ -5,7 +5,7 @@
 ///QUESTO è UN GIOCATORE FINTO con solo int id e puntatore alla stanza,
 /// poi ci andrà quello vero, questo è quello con cui ho fatto le prove =)
 #include "game.hpp"
-#include "headerstanza.hpp"
+#include "headerstanza.h"
 #include "sourcestanza.cpp"
 
 #include "numCifre.cpp" //funzione di utilità
@@ -36,7 +36,7 @@ class Map{
 
             //ora calcolo pl_chars
             int giggi = 0;
-            for ( int x = numero_di_giocatori; x>0 ; x-- ){ //per ogni giocatore(in senso figurato, non passo player veri)
+            for ( int x = numero_di_giocatori; x>0 ; x-- ){ //per ogni giocatore(in senso figurato, non passo Player veri)
                 giggi = giggi + numCifre(x) + 1;  //conta quante cifre ha il suo id e le somma al totale
             }
             pl_chars = giggi;
@@ -49,9 +49,9 @@ class Map{
             SThead = new lista_stanze;
             SThead->next = NULL;
             SThead->room = stanza(0,0); //pls NULL
-            for (int i=1; i <= numero_di_giocatori; i++ ){ SThead->room.add_player(i); }
-            //int i calcola man mano l'id del player che sta venendo aggiunto in 0,0, in senso figurato anche qui
-            ///id est [nel costruttore] non serve get nessun id da nessun player! =D
+            for (int i=1; i <= numero_di_giocatori; i++ ){ SThead->room.add_Player(i); }
+            //int i calcola man mano l'id del Player che sta venendo aggiunto in 0,0, in senso figurato anche qui
+            ///id est [nel costruttore] non serve get nessun id da nessun Player! =D
         }///fine costruttore
 
 
@@ -74,7 +74,7 @@ class Map{
             tmp->next = SThead ;
             SThead = tmp;
         } ///aggiungitore di stanze non ritornante (aggiorna SThead, che è un campo della classe, resta visibile)
-        //con add_player ha funzionato..
+        //con add_Player ha funzionato..
 
         ///l'aggiornamento di xmin ymin ymax lo faccio nella costruzione di nuova stanza complessiva,
         ///questa è solo la funzione di inserimento in lista
@@ -117,7 +117,7 @@ class Map{
         }///fine reorder
 
 
-        void new_direction (char dir, player& g1){
+        void new_direction (char dir, Player& g1){
             ///precondition: char è wasd
             stanza* stvecchia = g1.getsonoqui();
             int ix = stvecchia->getx();
@@ -188,20 +188,20 @@ class Map{
                 //cout<<"ptr a postoss\n";
             }//fine caso [stanza NON già presente] aka (if (crea))
 
-             ///ora spostare il player
+             ///ora spostare il Player
             ptr_listapl satana;
-            satana = stvecchia->rimuv_player (g1.getid(), stvecchia->get_pls()) ;
+            satana = stvecchia->rimuv_Player (g1.getid(), stvecchia->get_pls()) ;
             cout<<"\nsatana all'opera\n";
             stvecchia->write_pls(satana);
-            cout<<"rimozione player fatta!! qui va!\n";
+            cout<<"rimozione Player fatta!! qui va!\n";
 
 
-            //SThead->room.add_player(g1.getid()); //così lo metteva nella stanza in testa
-            if (dir=='w'){ stvecchia->getnord()->add_player(g1.getid()) ; }
-            else if (dir=='a'){ stvecchia->getwest()->add_player(g1.getid()) ; }
-            else if (dir=='s'){ stvecchia->getsud()->add_player(g1.getid()) ; }
-            else if (dir=='d'){ stvecchia->getest()->add_player(g1.getid()) ; }
-            cout<<"add_player fatta!! qui va!\n";
+            //SThead->room.add_Player(g1.getid()); //così lo metteva nella stanza in testa
+            if (dir=='w'){ stvecchia->getnord()->add_Player(g1.getid()) ; }
+            else if (dir=='a'){ stvecchia->getwest()->add_Player(g1.getid()) ; }
+            else if (dir=='s'){ stvecchia->getsud()->add_Player(g1.getid()) ; }
+            else if (dir=='d'){ stvecchia->getest()->add_Player(g1.getid()) ; }
+            cout<<"add_Player fatta!! qui va!\n";
 
             //g1.writesonoqui(&SThead->room); //così lo metteva nella stanza in testa
             if (dir=='w'){ g1.writesonoqui(stvecchia->getnord()) ;}
@@ -297,13 +297,13 @@ class Map{
 int main (){
     Map mappa (7);  //<------------------------------------------
 
-    player p1 = player (1);
-    player p2 = player (2);
-    player p3 = player (3);
-    player p4 = player (4);
-    player p5 = player (5);
-    player p6 = player (6);
-    player p7 = player (7);
+    Player p1 = Player (1);
+    Player p2 = Player (2);
+    Player p3 = Player (3);
+    Player p4 = Player (4);
+    Player p5 = Player (5);
+    Player p6 = Player (6);
+    Player p7 = Player (7);
     p1.writesonoqui ( & mappa.getST()->room );  //<-----------------------------------------------
     p2.writesonoqui ( & mappa.getST()->room );
     p3.writesonoqui ( & mappa.getST()->room );
@@ -311,7 +311,7 @@ int main (){
     p5.writesonoqui ( & mappa.getST()->room );
     p6.writesonoqui ( & mappa.getST()->room );
     p7.writesonoqui ( & mappa.getST()->room );
-    //attenzione, in questi codici ho tante liste_players ma
+    //attenzione, in questi codici ho tante liste_Players ma
     //-------> NESSUNA lista di VERI GIOCATORI, E [__ALLA MAPPA NON SERVE!!!!!__]
     //LA MAPPA PRENDE UN GIOCATORE PER VOLTA!! UNA LISTA DI VERI GIOCATORI SERVE PER GESTIRE I TURNI, MA NON ALLA MAPPA!
 
@@ -328,7 +328,7 @@ int main (){
     cout<<"\nora se ne spostano 7 a turno\n";    
     cout<<"scegliere wasd\n";
 
-    player arrei[7]; //array di giocatori
+    Player arrei[7]; //array di giocatori
     arrei[0]=p1;
     arrei[1]=p2;
     arrei[2]=p3;
