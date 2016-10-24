@@ -6,7 +6,7 @@
 #include <cstdlib>
 #include <string.h>
 #include <iostream>
-#include "provmappa.cpp"
+#include "sourcestanza.hpp"
 using namespace std;
 
 
@@ -41,6 +41,7 @@ protected:
     int lp; //punti vita giocatore
     int maxlp;
     Inventory* inventario; //inventario associato al goicatore
+    stanza* posizione;
 public:
     Player();
     Player(int identificatore);
@@ -51,6 +52,8 @@ public:
     void TakeObject(Object oggetto);
     int maxHp();
     Inventory* showInventory();
+    void writesonoqui(stanza* room);
+    stanza* getsonoqui();
 };
 
 struct Node{
