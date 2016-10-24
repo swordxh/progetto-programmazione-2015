@@ -190,17 +190,17 @@ class Map{
 
              ///ora spostare il Player
             ptr_listapl satana;
-            satana = stvecchia->rimuv_Player (g1.getid(), stvecchia->get_pls()) ;
+            satana = stvecchia->rimuv_Player (g1.showId(), stvecchia->get_pls()) ;
             cout<<"\nsatana all'opera\n";
             stvecchia->write_pls(satana);
             cout<<"rimozione Player fatta!! qui va!\n";
 
 
-            //SThead->room.add_Player(g1.getid()); //così lo metteva nella stanza in testa
-            if (dir=='w'){ stvecchia->getnord()->add_Player(g1.getid()) ; }
-            else if (dir=='a'){ stvecchia->getwest()->add_Player(g1.getid()) ; }
-            else if (dir=='s'){ stvecchia->getsud()->add_Player(g1.getid()) ; }
-            else if (dir=='d'){ stvecchia->getest()->add_Player(g1.getid()) ; }
+            //SThead->room.add_Player(g1.showId()); //così lo metteva nella stanza in testa
+            if (dir=='w'){ stvecchia->getnord()->add_Player(g1.showId()) ; }
+            else if (dir=='a'){ stvecchia->getwest()->add_Player(g1.showId()) ; }
+            else if (dir=='s'){ stvecchia->getsud()->add_Player(g1.showId()) ; }
+            else if (dir=='d'){ stvecchia->getest()->add_Player(g1.showId()) ; }
             cout<<"add_Player fatta!! qui va!\n";
 
             //g1.writesonoqui(&SThead->room); //così lo metteva nella stanza in testa
@@ -294,7 +294,7 @@ class Map{
 }; //fine class Map
 
 
-int main (){
+/*int main (){
     Map mappa (7);  //<------------------------------------------
 
     Player p1 = Player (1);
@@ -351,3 +351,4 @@ int main (){
 
     return 0;
 }
+*/
