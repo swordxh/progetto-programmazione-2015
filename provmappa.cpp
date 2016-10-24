@@ -119,7 +119,7 @@ class Map{
 
         void new_direction (char dir, Player& g1){
             ///precondition: char è wasd
-            stanza* stvecchia = g1.getsonoqui();
+            stanza* stvecchia = g1->getsonoqui();
             int ix = stvecchia->getx();
             int iy = stvecchia->gety();
             cout<<"\nstanza vecchia is "<< ix<< iy<< "\n"; //cout di prova
@@ -190,24 +190,24 @@ class Map{
 
              ///ora spostare il Player
             ptr_listapl satana;
-            satana = stvecchia->rimuv_Player (g1.showId(), stvecchia->get_pls()) ;
+            satana = stvecchia->rimuv_Player (g1->showId(), stvecchia->get_pls()) ;
             cout<<"\nsatana all'opera\n";
             stvecchia->write_pls(satana);
             cout<<"rimozione Player fatta!! qui va!\n";
 
 
-            //SThead->room.add_Player(g1.showId()); //così lo metteva nella stanza in testa
-            if (dir=='w'){ stvecchia->getnord()->add_Player(g1.showId()) ; }
-            else if (dir=='a'){ stvecchia->getwest()->add_Player(g1.showId()) ; }
-            else if (dir=='s'){ stvecchia->getsud()->add_Player(g1.showId()) ; }
-            else if (dir=='d'){ stvecchia->getest()->add_Player(g1.showId()) ; }
+            //SThead->room.add_Player(g1->showId()); //così lo metteva nella stanza in testa
+            if (dir=='w'){ stvecchia->getnord()->add_Player(g1->showId()) ; }
+            else if (dir=='a'){ stvecchia->getwest()->add_Player(g1->showId()) ; }
+            else if (dir=='s'){ stvecchia->getsud()->add_Player(g1->showId()) ; }
+            else if (dir=='d'){ stvecchia->getest()->add_Player(g1->showId()) ; }
             cout<<"add_Player fatta!! qui va!\n";
 
-            //g1.writesonoqui(&SThead->room); //così lo metteva nella stanza in testa
-            if (dir=='w'){ g1.writesonoqui(stvecchia->getnord()) ;}
-            else if (dir=='a'){ g1.writesonoqui(stvecchia->getwest()) ;}
-            else if (dir=='s'){ g1.writesonoqui(stvecchia->getsud()) ;}
-            else if (dir=='d'){ g1.writesonoqui(stvecchia->getest()) ;}
+            //g1->writesonoqui(&SThead->room); //così lo metteva nella stanza in testa
+            if (dir=='w'){ g1->writesonoqui(stvecchia->getnord()) ;}
+            else if (dir=='a'){ g1->writesonoqui(stvecchia->getwest()) ;}
+            else if (dir=='s'){ g1->writesonoqui(stvecchia->getsud()) ;}
+            else if (dir=='d'){ g1->writesonoqui(stvecchia->getest()) ;}
             ///sonoqui va all'INDIRIZZO DELLA STANZA
             cout<<"writesonoqui fatta!! qui va!\n";
 
