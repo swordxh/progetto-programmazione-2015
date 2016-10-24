@@ -56,11 +56,11 @@ struct Node{
     Player player;
     struct Node* next;
 };
-typedef struct Node node;
+//typedef struct Node node;
 
 class Queue{
 protected:
-    node* q; //puntatore al primo nodo della lista
+    Node* q; //puntatore al primo nodo della lista
 public:
     Queue();
     void enqueue (Player giocatore); //input id del player
@@ -82,7 +82,7 @@ protected:
     databaseObject* database;
     int nPlayers;
     int nRounds;
-    Object defObj;
+    Object* defObj;
     //map
 public:
     Manage();
