@@ -12,7 +12,7 @@ struct lista_players {
 };
 typedef lista_players* ptr_listapl;
 ///la [lista di giocatori] della stanza (ovvero la lista dei presenti nella stanza che serve per stamparli)
-///funziona indipendentemente dai giocatori, Ë solo un elenco dei presenti COME INT
+///funziona indipendentemente dai giocatori, √® solo un elenco dei presenti COME INT
 
 
 class stanza{
@@ -24,7 +24,7 @@ class stanza{
         stanza* est;
         stanza* west;
         ptr_listapl pls;    //puntatore alla testa della [lista giocatori presenti nella stanza]
-        //gente e professore/professoressa: memorizzate cos'Ë pls che vi servir‡!
+        //gente e professore/professoressa: memorizzate cos'√® pls che vi servir√†!
     public:
         stanza();
         stanza(int xi, int yi);
