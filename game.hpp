@@ -24,7 +24,7 @@ public:
 class Inventory{
 protected:
     Object *oggetto[5]; //l'inventario è composto al massimo da 5 oggetti
-    bool slot[5]; //booleano che indica se uno slot dell'inventario pieno o vuoto
+    //bool slot[5]; //booleano che indica se uno slot dell'inventario pieno o vuoto
 public:
     Inventory();
     bool slotIsFull(int slotInventario);
