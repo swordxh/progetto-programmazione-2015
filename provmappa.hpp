@@ -33,7 +33,7 @@ class Map{
         int absh (int x);
         int numCifre(int x);
         ptr_listast reorder (ptr_listast headdy);
-        void new_direction (char dir, Player& g1);///fine new_direction
+        void new_direction (char dir, Player *g1);///fine new_direction
         void stampa ();
 };
 

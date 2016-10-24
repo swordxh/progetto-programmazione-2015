@@ -1,6 +1,8 @@
 #ifndef SOURCESTANZA_HPP
 #define SOURCESTANZA_HPP
 
+#include <stddef.h>
+
 ///la stanza NON DEVE INCLUDERE IL PLAYER VERO! funziona indipendentemente!
 
 struct lista_Players {

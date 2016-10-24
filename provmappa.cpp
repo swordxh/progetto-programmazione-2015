@@ -92,7 +92,7 @@
         }///fine reorder
 
 
-        void Map::new_direction (char dir, Player& g1){
+        void Map::new_direction (char dir, Player *g1){
             ///precondition: char è wasd
             stanza* stvecchia = g1->getsonoqui();
             int ix = stvecchia->getx();

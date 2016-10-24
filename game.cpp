@@ -8,7 +8,7 @@
 
 #include "game.hpp"
 #include "battle.hpp"
-#include "sourcestanza.hpp"
+#include "provmappa.hpp"
 
 using namespace std;
 
