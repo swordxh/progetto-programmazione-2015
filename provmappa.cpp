@@ -4,34 +4,9 @@
 
 ///QUESTO è UN GIOCATORE FINTO con solo int id e puntatore alla stanza,
 /// poi ci andrà quello vero, questo è quello con cui ho fatto le prove =)
-#include "game.hpp"
-#include "headerstanza.h"
-#include "sourcestanza.cpp"
+#include "provmappa.hpp"
 
-#include "numCifre.cpp" //funzione di utilità
-
-
-struct lista_stanze {
-    stanza room;
-    lista_stanze* next;
-};
-typedef lista_stanze* ptr_listast;
-
-
-///per ora [header e source tutto insieme]
-class Map{
-    protected:
-
-        int xmin;
-        int ymin;
-        int ymax;
-        ///minimi e massimi nel piano cartesiano, per poterla stampare
-
-        int pl_chars; //caratteri totali di cui ha bisogno la stampa dei giocatori in ogni stanza
-        ptr_listast SThead; //ptr alla testa della lista delle stanze (a mo' di SymbolTable)
-
-    public:
-        Map(int numero_di_giocatori){
+        Map::Map(int numero_di_giocatori){
             xmin=ymin=ymax=0;
 
             //ora calcolo pl_chars
@@ -55,10 +30,10 @@ class Map{
         }///fine costruttore
 
 
-        int get_pl_chars(){return pl_chars;} //solo per provare a stamparlo come controllo
-        ptr_listast getST(){return SThead;} //ritorna ptr alla testa della lista delle stanze
+        int Map::get_pl_chars(){return pl_chars;} //solo per provare a stamparlo come controllo
+        ptr_listast Map::getST(){return SThead;} //ritorna ptr alla testa della lista delle stanze
 
-        ptr_listast SThead_insertR (int ics, int ipsi, ptr_listast head){
+        ptr_listast Map::SThead_insertR (int ics, int ipsi, ptr_listast head){
             ptr_listast tmp = new lista_stanze;
             tmp->room = stanza(ics,ipsi); //costruisce nel campo room una stanza con ics e ipsi e tutti i ptr a NULL
             tmp->next = head ;
@@ -66,7 +41,7 @@ class Map{
             return head;
         } ///aggiungitore di stanze che ritorna testa
 
-        void SThead_insert (int ics, int ipsi){
+        void Map::SThead_insert (int ics, int ipsi){
             // vede SThead perchè è un campo della classe
             //e aggiorna la lista senza bisogno di ritornare
             ptr_listast tmp = new lista_stanze;
@@ -80,12 +55,12 @@ class Map{
         ///questa è solo la funzione di inserimento in lista
 
         ///utility
-        int absh (int x){
+        int Map::absh (int x){
             if (x<0){return -x;}
             else {return x;}
         }
 
-        ptr_listast reorder (ptr_listast headdy){ ///riordinatore per lista di stanze, bubblesort
+        ptr_listast Map::reorder (ptr_listast headdy){ ///riordinatore per lista di stanze, bubblesort
             ///serve per riordinare(sulla base del campo x) le STANZE CON MEDESIMA Y nell'ambito della STAMPA!
             //(vedi funzionamento stampa)
             ///NON E' CREATA PER LAVORARE SULLA LISTA_STANZE DELLA MAPPA
@@ -117,7 +92,7 @@ class Map{
         }///fine reorder
 
 
-        void new_direction (char dir, Player& g1){
+        void Map::new_direction (char dir, Player& g1){
             ///precondition: char è wasd
             stanza* stvecchia = g1->getsonoqui();
             int ix = stvecchia->getx();
@@ -212,8 +187,20 @@ class Map{
             cout<<"writesonoqui fatta!! qui va!\n";
 
         }///fine new_direction
+        int Map::numCifre(int x){
+            if (x<10) return 1;
+            else if (x<100) return 2;
+            else if (x<1000) return 3;
+            else if (x<10000) return 4;
+            else if (x<100000) return 5;
+            else if (x<1000000) return 6;
+            else if (x<10000000) return 7;
+            else if (x<100000000) return 8;
+            else if (x<1000000000) return 9;
+            else return 10;
+        }
 
-        void stampa (){
+        void Map::stampa (){
             cout<<"\n\n"; //inizio mappa un po' staccato da (qualunque cosa ci fosse prima)
             cout<<"\nxmin "<<xmin<<"\nymax "<<ymax<<"\nymin "<<ymin<<"\n\n";
             for ( int riga = ymax ; riga >= ymin ; riga-- ){///per ogni riga
@@ -290,65 +277,3 @@ class Map{
                 cout<<"\n\n"; //scende, va a capo per la prossima riga
             }///fine del "per ogni riga"
         }//fine stampa
-
-}; //fine class Map
-
-
-/*int main (){
-    Map mappa (7);  //<------------------------------------------
-
-    Player p1 = Player (1);
-    Player p2 = Player (2);
-    Player p3 = Player (3);
-    Player p4 = Player (4);
-    Player p5 = Player (5);
-    Player p6 = Player (6);
-    Player p7 = Player (7);
-    p1.writesonoqui ( & mappa.getST()->room );  //<-----------------------------------------------
-    p2.writesonoqui ( & mappa.getST()->room );
-    p3.writesonoqui ( & mappa.getST()->room );
-    p4.writesonoqui ( & mappa.getST()->room );
-    p5.writesonoqui ( & mappa.getST()->room );
-    p6.writesonoqui ( & mappa.getST()->room );
-    p7.writesonoqui ( & mappa.getST()->room );
-    //attenzione, in questi codici ho tante liste_Players ma
-    //-------> NESSUNA lista di VERI GIOCATORI, E [__ALLA MAPPA NON SERVE!!!!!__]
-    //LA MAPPA PRENDE UN GIOCATORE PER VOLTA!! UNA LISTA DI VERI GIOCATORI SERVE PER GESTIRE I TURNI, MA NON ALLA MAPPA!
-
-    cout<<"\nprova con singolo giocatore\n";
-    cout<<"scegliere wasd\n";
-    for (int i=1; i<=10; i++){ //sposta 10 volte p1
-        char di; cin>>di;
-        cout<<"\n----------------start stringhe di controllo-------------------------\n";
-        mappa.new_direction(di, p1);
-        mappa.stampa();
-        cout<<"\n------------------------------------------------------------------\n";
-    }
-
-    cout<<"\nora se ne spostano 7 a turno\n";    
-    cout<<"scegliere wasd\n";
-
-    Player arrei[7]; //array di giocatori
-    arrei[0]=p1;
-    arrei[1]=p2;
-    arrei[2]=p3;
-    arrei[3]=p4;
-    arrei[4]=p5;
-    arrei[5]=p6;
-    arrei[6]=p7;
-
-    for (int due=1; due<=2; due++){ //sposta 2 volte ciascuno
-        for (int i=0; i<=6; i++){
-            char dirr; cin>>dirr;
-            cout<<"\n----------------start stringhe di controllo-------------------------\n";
-            mappa.new_direction(dirr, arrei[i]);            
-            mappa.stampa();
-            cout<<"\n------------------------------------------------------------------\n";
-        }
-    }
-    //se funziona questa roba significa che funziona tutta la stampa, tutto l'aggiornamento della mappa e
-    //tutto l'aggiornamento dei sonoqui...
-
-    return 0;
-}
-*/

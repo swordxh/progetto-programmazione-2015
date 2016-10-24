@@ -1,6 +1,4 @@
-#include <iostream>
 #include "sourcestanza.hpp"
-using namespace std;
 
 ///la stanza NON DEVE INCLUDERE IL PLAYER VERO! funziona indipendentemente!
 

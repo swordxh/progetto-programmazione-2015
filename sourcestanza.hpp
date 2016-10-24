@@ -1,9 +1,5 @@
-#ifndef HEADERSTANZA_H_INCLUDED
-#define HEADERSTANZA_H_INCLUDED
-
-#include <iostream>
-
-using namespace std;
+#ifndef SOURCESTANZA_HPP
+#define SOURCESTANZA_HPP
 
 ///la stanza NON DEVE INCLUDERE IL PLAYER VERO! funziona indipendentemente!
 
@@ -44,11 +40,11 @@ class stanza{
         ptr_listapl get_pls(); //ritorna il PUNTATORE ALLA TESTA della lista_players della stanza
         void write_pls (ptr_listapl gigi);
 
-        void add_player(int idPleier);
+        void add_Player(int idPleier);
         ptr_listapl rimuv_player(int idP2remove, ptr_listapl head);
 
         //void rem_player(int idP2remove, ptr_listapl head); questa non ritorna il ptr alla testa della lista aggiornata,
         // e infatti se si usa questa non funziona la rimozione dalla testa
 
 };
-#endif // HEADERSTANZA_H_INCLUDED
+#endif // SOURCESTANZA_HPP
