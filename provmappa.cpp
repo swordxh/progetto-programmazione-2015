@@ -5,7 +5,7 @@
 ///QUESTO è UN GIOCATORE FINTO con solo int id e puntatore alla stanza,
 /// poi ci andrà quello vero, questo è quello con cui ho fatto le prove =)
 #include "game.hpp"
-#include "headerstanza.h"
+#include "headerstanza.hpp"
 #include "sourcestanza.cpp"
 
 #include "numCifre.cpp" //funzione di utilità
