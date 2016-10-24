@@ -3,11 +3,11 @@
 
 ///la stanza NON DEVE INCLUDERE IL PLAYER VERO! funziona indipendentemente!
 
-struct lista_players {
+struct lista_Players {
     int idPlayer;
-    lista_players*   next_pl;
+    lista_Players*   next_pl;
 };
-typedef lista_players* ptr_listapl;
+typedef lista_Players* ptr_listapl;
 ///la [lista di giocatori] della stanza (ovvero la lista dei presenti nella stanza che serve per stamparli)
 ///funziona indipendentemente dai giocatori, è solo un elenco dei presenti COME INT
 
@@ -37,13 +37,13 @@ class stanza{
         void writeest(stanza* niu);
         void writewest(stanza* niu);
 
-        ptr_listapl get_pls(); //ritorna il PUNTATORE ALLA TESTA della lista_players della stanza
+        ptr_listapl get_pls(); //ritorna il PUNTATORE ALLA TESTA della lista_Players della stanza
         void write_pls (ptr_listapl gigi);
 
         void add_Player(int idPleier);
-        ptr_listapl rimuv_player(int idP2remove, ptr_listapl head);
+        ptr_listapl rimuv_Player(int idP2remove, ptr_listapl head);
 
-        //void rem_player(int idP2remove, ptr_listapl head); questa non ritorna il ptr alla testa della lista aggiornata,
+        //void rem_Player(int idP2remove, ptr_listapl head); questa non ritorna il ptr alla testa della lista aggiornata,
         // e infatti se si usa questa non funziona la rimozione dalla testa
 
 };
