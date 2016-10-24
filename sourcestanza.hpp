@@ -2,6 +2,7 @@
 #define HEADERSTANZA_H_INCLUDED
 
 #include <iostream>
+
 using namespace std;
 
 ///la stanza NON DEVE INCLUDERE IL PLAYER VERO! funziona indipendentemente!
