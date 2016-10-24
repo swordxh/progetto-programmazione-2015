@@ -6,6 +6,7 @@
 #include <cstdlib>
 #include <string.h>
 #include <iostream>
+#include "provmappa.cpp"
 using namespace std;
 
 
