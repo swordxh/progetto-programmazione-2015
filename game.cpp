@@ -35,12 +35,16 @@ void Object::setObject(char nome[], int danno){
 Inventory::Inventory(){
     int i=0;
     for (i=0;i<5;i++){
-        slot[i]=false;
+        //slot[i]=false;
         oggetto[i]=NULL;
     }
 }
 bool Inventory::slotIsFull(int slotInventario){ //controlla se uno specifico slot dell'inventario è pieno
-    return slot[slotInventario]; //ritorna 1 se è pieno, 0 altrimenti
+    if (oggetto[slotInventario]!=NULL) {
+        return 1;
+    }
+    else return 0;
+    //return slot[slotInventario]; //ritorna 1 se è pieno, 0 altrimenti
     }
 int Inventory::AccessObjectFromInventory (int slotInventario){ //accede ad un oggetto dell'inventario
         return oggetto[slotInventario]->Damage(); //ritorna il danno dell'oggetto a cui si è acceduti nell'inventario
@@ -48,14 +52,14 @@ int Inventory::AccessObjectFromInventory (int slotInventario){ //accede ad un og
 void Inventory::insertObject(Object oggettoDaInserire, int slotInventario){//inserisci oggetto nell'inventario
     oggetto[slotInventario]=new Object;
     *oggetto[slotInventario]=oggettoDaInserire;
-        slot[slotInventario]=1; //dopo l'inserimento, lo slot sarà pieno
+        //slot[slotInventario]=1; //dopo l'inserimento, lo slot sarà pieno
     }
 void Inventory::deleteObject(int slotInventario){
     //elimina oggetto dall'inventario
     Object* app=oggetto[slotInventario];
     delete app;
     oggetto[slotInventario]=NULL;
-    slot[slotInventario]=0; //indico che lo slot nell'inventario corrispondente all'oggetto eliminato si è svuotato
+    //slot[slotInventario]=0; //indico che lo slot nell'inventario corrispondente all'oggetto eliminato si è svuotato
     }
 char* Inventory::getName(int slotInventario){
         return oggetto[slotInventario]->showNameObject();
@@ -65,7 +69,7 @@ Player::Player(){
 }
 
 Player::Player(int identificatore){ //costruttore player
-        inventario=new Inventory;
+        inventario=new Inventory; //DA FIXARE!!! mettere inventario=NULL e inizializzarlo solo nel caso in cui viene inserito oggetto
         id=identificatore;
         lp=100;
         maxlp=100;
@@ -124,7 +128,7 @@ void Queue::enqueue (Player giocatore){
         Node* nodo=new Node;
 
         nodo->player=giocatore;
-        cout<<&nodo->player<<" "<<&giocatore<<endl;
+        //cout<<&nodo->player<<" "<<&giocatore<<endl;
         nodo->next=q;
         app->next=nodo;
         nodo=NULL;
@@ -458,7 +462,6 @@ void Manage::assignDefaultObject(){
         Node* app=this->returnList()->returnHead();
         for (i=0; i<nPlayers; i++) {
         app->player.TakeObject(*defObj);
-        app->player.showInventory()->insertObject(*defObj, 0);
         app=app->next;
     }
     app=NULL;
