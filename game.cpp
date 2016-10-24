@@ -8,6 +8,8 @@
 
 #include "game.hpp"
 #include "battle.hpp"
+#include "sourcestanza.hpp"
+
 using namespace std;
 
 Object::Object(){
@@ -73,6 +75,7 @@ Player::Player(int identificatore){ //costruttore player
         id=identificatore;
         lp=100;
         maxlp=100;
+    posizione=NULL;
 }
 int Player::showId(){
         return id;
@@ -106,6 +109,16 @@ void Player::TakeObject(Object oggetto){ //inserisce un oggetto nel primo slot l
 Inventory* Player::showInventory(){
         return inventario;
     }
+void Player::writesonoqui(stanza* room){
+    if (posizione==NULL) {
+        posizione=new stanza;
+    }
+    posizione=room;
+}
+
+stanza* Player::getsonoqui(){
+    return posizione;
+}
 
 Queue::Queue(){
     q=NULL;
@@ -495,7 +508,7 @@ void Manage::startGame(){
     
     this->builtQueue();
     this->assignDefaultObject();
-    
+    Map mappa(nPlayers);
     Node* app=this->returnList()->returnHead();
     while (!(this->returnList())->isEmpty() && roundsCounter<nRounds){
         //stampa mappa
@@ -507,7 +520,7 @@ void Manage::startGame(){
         int i=0;
         for (i=0; i<(nPlayers-nDeath); i++) {
             cout << "Giocatore "<<app->player.showId()<<" fai la tua mossa! [W]=Nord, [S]=sud, [A]=ovest, [D]=est"<<endl;
-            //stampa mappa
+
             //cambia posizione giocatore
             this->spawnMonsterOrObject(&app->player); //battaglia o trova oggetto
             if(app->player.life()<=0){ //Se giocatore è morto lo elimino dalla lista
