@@ -538,7 +538,8 @@ void Manage::startGame(){
         nDeath=nDeath+ndead;
         //app=NULL; (meglio qui)
     }
-    //if (nPlayers>nDeath)fine.battleManager(&app->player);
+    //if (l->returnHead!=NULL)fine.battleManager();
+    //else cout<<"AVETE PERSO!!!!";
     app=NULL;    
     //SPAWN MOSTRO
     
