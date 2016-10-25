@@ -8,6 +8,7 @@ battle::battle(Player *p_curr, Manage *man)
 	spiderman=NULL;
 	romero=NULL;
 	MonsterName[0]='\0';
+	potionHP=45;
 }
 void battle::getRandomMonster(){
 	int dice=0;

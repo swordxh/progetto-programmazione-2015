@@ -14,12 +14,12 @@
 class battle{
 protected:
 	Player *p;
-    Manage *manage;
+	Manage *manage;
 	Zombie *romero;
 	Vampire *dracula;
 	Spider *spiderman;
 	char MonsterName[10];
-	const int potionHP=30;
+	int potionHP;
 public:
     battle(Player *p_curr, Manage *man);
 	void battleManager();
