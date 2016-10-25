@@ -90,7 +90,9 @@
             }//fine while grosso, falg è rimasto 0, era già tutto in ordine
             return(headdy);
         }///fine reorder
-
+        stanza* Map::initiatestanze(){
+            return &SThead->room;
+        }
 
         bool Map::new_direction (char dir, Player *g1){
             ///precondition: char è wasd

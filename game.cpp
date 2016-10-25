@@ -110,9 +110,6 @@ Inventory* Player::showInventory(){
         return inventario;
     }
 void Player::writesonoqui(stanza* room){
-    if (posizione==NULL) {
-        posizione=new stanza;
-    }
     posizione=room;
 }
 
@@ -509,9 +506,12 @@ void Manage::startGame(){
     this->builtQueue();
     this->assignDefaultObject();
     Map mappa(nPlayers);
+    stanza* basemappa=mappa.initiatestanze();
+    bool newroom=false;
+    char dir;
+    //finale fine();
     Node* app=this->returnList()->returnHead();
     while (!(this->returnList())->isEmpty() && roundsCounter<nRounds){
-        //stampa mappa
         ndead=0;
         roundsCounter++;
         cout<<"ROUND "<<roundsCounter<<endl;
@@ -519,10 +519,15 @@ void Manage::startGame(){
         Node* app=this->returnList()->returnHead();
         int i=0;
         for (i=0; i<(nPlayers-nDeath); i++) {
+            mappa.stampa();
+            if (app->player.getsonoqui()==NULL)app->player.writesonoqui(basemappa);
             cout << "Giocatore "<<app->player.showId()<<" fai la tua mossa! [W]=Nord, [S]=sud, [A]=ovest, [D]=est"<<endl;
-
-            //cambia posizione giocatore
-            this->spawnMonsterOrObject(&app->player); //battaglia o trova oggetto
+              do{
+                cin>>dir;
+              }while ((dir!='w') && (dir!='a') && (dir!='s') && (dir!='d'));
+            cout<<dir;
+            newroom=mappa.new_direction(dir, &app->player);
+            if (newroom)this->spawnMonsterOrObject(&app->player); //battaglia o trova oggetto
             if(app->player.life()<=0){ //Se giocatore è morto lo elimino dalla lista
                 l->dequeue(app->player.showId());
                 ndead++;
@@ -533,6 +538,7 @@ void Manage::startGame(){
         nDeath=nDeath+ndead;
         //app=NULL; (meglio qui)
     }
+    //if (nPlayers>nDeath)fine.battleManager(&app->player);
     app=NULL;    
     //SPAWN MOSTRO
     

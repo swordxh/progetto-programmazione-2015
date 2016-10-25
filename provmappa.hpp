@@ -35,6 +35,7 @@ class Map{
         ptr_listast reorder (ptr_listast headdy);
         bool new_direction (char dir, Player *g1);///fine new_direction
         void stampa ();
+        stanza* initiatestanze();
 };
 
 #endif // PROVMAPPA_H
