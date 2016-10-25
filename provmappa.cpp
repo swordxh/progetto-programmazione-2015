@@ -92,7 +92,7 @@
         }///fine reorder
 
 
-        void Map::new_direction (char dir, Player *g1){
+        bool Map::new_direction (char dir, Player *g1){
             ///precondition: char è wasd
             stanza* stvecchia = g1->getsonoqui();
             int ix = stvecchia->getx();
@@ -185,7 +185,7 @@
             else if (dir=='d'){ g1->writesonoqui(stvecchia->getest()) ;}
             ///sonoqui va all'INDIRIZZO DELLA STANZA
             cout<<"writesonoqui fatta!! qui va!\n";
-
+            return crea;
         }///fine new_direction
         int Map::numCifre(int x){
             if (x<10) return 1;
