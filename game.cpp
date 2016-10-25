@@ -259,7 +259,7 @@ void Manage::spawnMonsterOrObject(Player* giocatore){
     int die = 0;
     srand(time(0));
     die = (rand() % 100) +1;//DA DECIDERE VALORE VALORE
-    if (die<=50) { //spawn mostro e inizio battaglia
+    if (die<=70) { //spawn mostro e inizio battaglia
         battle b=battle(giocatore, this);
         b.battleManager();
     }

@@ -14,11 +14,12 @@ void battle::getRandomMonster(){
 	int dice=0;
 	srand(time(0));
 	dice = (rand()%100)+1;
-	if (dice <=50){
+	cout<<dice;
+	if (dice <=35){
 		dracula = new Vampire();
 		strcpy(MonsterName, dracula->GetName());
 	}
-	else if (dice<=80){
+	else if (dice<=35){
 		romero = new Zombie();
 		strcpy(MonsterName, romero->GetName());
 	}
