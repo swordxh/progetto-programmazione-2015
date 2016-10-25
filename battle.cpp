@@ -19,7 +19,7 @@ void battle::getRandomMonster(){
 		dracula = new Vampire();
 		strcpy(MonsterName, dracula->GetName());
 	}
-	else if (dice<=35){
+	else if (dice<=70){
 		romero = new Zombie();
 		strcpy(MonsterName, romero->GetName());
 	}
