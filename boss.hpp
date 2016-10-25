@@ -4,14 +4,14 @@
 #include <unistd.h>
 #include "game.hpp"
 
-const int z = 2; // n indica il numero dei giocatori, k aumenta con l'avanzare dei turni, z Ë il moltiplicatore per la vita del boss, att il giocatore attuale
+const int z = 2; // n indica il numero dei giocatori, k aumenta con l'avanzare dei turni, z √® il moltiplicatore per la vita del boss, att il giocatore attuale
 
 class boss{
 protected:
 	int MaxHp; //HP massimi
 	int Hp; // HP attuali
 	char name[10];// nome
-	int damagest, damage1; // damagest Ë l'attacco standard, damage1 quello che attacca tutti i giocatori, damage2 quello che uccide istantaneamente il giocatore con meno vita
+	int damagest, damage1; // damagest √® l'attacco standard, damage1 quello che attacca tutti i giocatori, damage2 quello che uccide istantaneamente il giocatore con meno vita
 public:
 	boss(int *nPlayers); // costruttore
 	char *GetName(); // da il nome del boss
@@ -24,12 +24,12 @@ public:
 
 class finale{
 protected:
-    Queue *l; // l serve per scorrere la lista, head Ë un riferimento per i turni
+    Queue *l; // l serve per scorrere la lista, head √® un riferimento per i turni
     Node* p; //p = giocatore attuale; head = testa
     Node* head;
     boss *b;
     Player *q;
-    int k; // per ciclicit‡ attacchi
+    int k; // per ciclicit√† attacchi
     int nPlayers; // numero dei giocatori
     char MonsterName[10]; // nome boss
     databaseObject* database; //mi serve per usare l'inventario

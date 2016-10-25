@@ -9,6 +9,7 @@
 #include "game.hpp"
 #include "battle.hpp"
 #include "provmappa.hpp"
+#include "boss.hpp"
 
 using namespace std;
 
@@ -524,8 +525,8 @@ void Manage::startGame(){
     stanza* basemappa=mappa.initiatestanze();
     bool newroom=false;
     char dir;
-    //finale fine();
     Node* app=this->returnList()->returnHead();
+    finale fine(this->returnList(), nPlayers);
     while (!(this->returnList())->isEmpty() && roundsCounter<nRounds){
         ndead=0;
         roundsCounter++;
@@ -553,8 +554,8 @@ void Manage::startGame(){
         nDeath=nDeath+ndead;
         //app=NULL; (meglio qui)
     }
-    //if (l->returnHead!=NULL)fine.battleManager();
-    //else cout<<"AVETE PERSO!!!!";
+    if (l->returnHead()!=NULL)fine.battleManager();
+    else cout<<"AVETE PERSO!!!!";
     app=NULL;    
     //SPAWN MOSTRO
     
