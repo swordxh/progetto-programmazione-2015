@@ -98,6 +98,7 @@ public:
     void setRounds(int n);
     void setPlayers(int n);
     void startGame();
+    int sanitycheck();
     Queue* returnList();
     void assignDefaultObject();
     void setDefaultObject(Object oggetto);

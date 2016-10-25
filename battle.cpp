@@ -10,6 +10,7 @@ battle::battle(Player *p_curr, Manage *man)
 	MonsterName[0]='\0';
 	potionHP=45;
 }
+
 void battle::getRandomMonster(){
 	int dice=0;
 	srand(time(0));
@@ -74,7 +75,7 @@ int battle::IOManager(){ //ritorna il danno del oggetto che si è scelto
 	select--;
 	int counter=select;
 	do{
-		cin>>select;
+		select=manage->sanitycheck();
 		if ((select<1) || (select>counter)) cout<<"Devi selezionare un oggetto valido!"<<endl;
 	}while((select<1) || (select>counter));
 	counter=1;

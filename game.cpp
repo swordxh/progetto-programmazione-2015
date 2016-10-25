@@ -254,6 +254,21 @@ void Manage::fetchDatabaseObjects(Object oggettoDelGioco){
     app=NULL;
 }
 
+int Manage::sanitycheck(){
+    int num=0;
+    bool failed=false;
+    do{
+        failed=false;
+        cin>>num;
+        if (cin.fail()){
+          cin.clear();
+          cin.ignore(1000,'\n');
+          cout<<"L'input dev'essere un intero!"<<endl;
+          failed=true;
+          }
+      }while(failed);
+    return num;
+}
 
 void Manage::spawnMonsterOrObject(Player* giocatore){
     int die = 0;
@@ -296,7 +311,7 @@ void Manage::spawnMonsterOrObject(Player* giocatore){
                 while(error)
                 {
                 cout <<"Hai trovato l'oggetto "<<database->oggetto[die]->showNameObject()<<", vuoi prenderlo? [1]=SI [0]=NO: "<<endl;
-                cin >>risposta;
+                risposta=sanitycheck();
 
                 if (risposta!=0 && risposta!=1)
                 {
@@ -323,7 +338,7 @@ void Manage::spawnMonsterOrObject(Player* giocatore){
                 bool error=true;
                 while(error){
                     cout <<"Il tuo inventario è pieno! Vuoi prendere comunque l'oggetto sostituendolo con uno del tuo inventario? [1]=SI [0]=NO: "<<endl;
-                    cin >>risposta;
+                    risposta=sanitycheck();
                     cout <<endl;
 
                     if (risposta!=0 && risposta!=1)
@@ -343,7 +358,7 @@ void Manage::spawnMonsterOrObject(Player* giocatore){
 
                         while (error) {
                             cout <<"Inserisci il numero dello lo slot dell'oggetto che vuoi sostituire: "<<endl;
-                            cin >>slot;
+                            slot=sanitycheck();
                             if(slot>0 && slot<=5)error=false;
                             else cout<<"Attenzione: hai inserito uno slot non valido! ";
                         }
@@ -383,7 +398,7 @@ void Manage::dropObject(Player* giocatore){
         while(error)
         {
             cout <<"Il mostro aveva con sé l'oggetto "<<database->oggetto[die]->showNameObject()<<", vuoi prenderlo? [1]=SI [0]=NO: "<<endl;
-            cin >>risposta;
+            risposta=sanitycheck();
 
             if (risposta!=0 && risposta!=1)
             {
@@ -421,7 +436,7 @@ void Manage::dropObject(Player* giocatore){
             error=true;
             while(error){
                 cout <<"Il tuo inventario è pieno! Vuoi prendere comunque l'oggetto sostituendolo con uno del tuo inventario? [1]=SI [0]=NO: ";
-                cin >>risposta;
+                risposta=sanitycheck();
                 cout <<endl;
 
                 if (risposta!=0 && risposta!=1)
@@ -442,7 +457,7 @@ void Manage::dropObject(Player* giocatore){
 
                 while (error) {
                     cout <<"Inserisci il numero dello lo slot dell'oggetto che vuoi sostituire: "<<endl;
-                    cin >>slot;
+                    slot=sanitycheck();;
                     if(slot>0 && slot<=5)error=false;
                     else cout<<"Attenzione: hai inserito uno slot non valido! "<<endl;
                 }
@@ -494,12 +509,12 @@ void Manage::startGame(){
     int ndead=0;
     int nDeath=0;
     cout<<"Inserisci numero giocatori: ";
-    cin>>nplayers;
+    nplayers=sanitycheck();;
     cout<<endl;
     this->setPlayers(nplayers);
     
     cout<<"Inserisci numero rounds per giocatore: ";
-    cin>>nrounds;
+    nrounds=sanitycheck();;
     cout<<endl;
     this->setRounds(nrounds);
     
