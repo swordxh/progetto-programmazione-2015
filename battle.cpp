@@ -8,10 +8,10 @@ battle::battle(Player *p_curr, Manage *man)
 	spiderman=NULL;
 	romero=NULL;
 	MonsterName[0]='\0';
-	potionHP=45;
+	potionHP=45; //è quanti hp restituisce la pozione, è hardcoded nel costruttore
 }
 
-void battle::getRandomMonster(){
+void battle::getRandomMonster(){ //aggiorna i puntatori null del costruttore ad uno dei vari mostri, effettivamente spawna 1 solo mostro a round
 	int dice=0;
 	srand(time(0));
 	dice = (rand()%100)+1;
@@ -28,6 +28,10 @@ void battle::getRandomMonster(){
 		strcpy(MonsterName, spiderman->GetName());
 	}
 }
+
+/* questo metodo gestisce la logica della battaglia principale, come una sorta di main diciamo, chiama il mostro random e poi chiama le funzioni di stampa healthbar
+ * e calcolo danno, entrambe in un ciclo per simulare i turni d'attacco, quando il giocatore o il muore, termina chiamando vittoria oppure sconfitta
+ */
 void battle::battleManager(){
 	if ((dracula==NULL) && (romero==NULL) && (spiderman==NULL)) getRandomMonster();
 	int stato=0;
@@ -43,7 +47,7 @@ void battle::battleManager(){
 			else if (spiderman!=NULL){
 				HealthBar(p->life(), p->maxHp(), spiderman->LifePoints(), spiderman->MaxLifePoints(),p->showId());
 			}
-			stato=CalculateDamage(IOManager());
+			stato=CalculateDamage(IOManager()); //questa è la funzione che calcola il danno del mostro e del giocatore, prende in input un altra funzione che chiede quale oggetto si vuole scegliere
 		}
 		if (dracula!=NULL){
 			HealthBar(p->life(), p->maxHp(), dracula->LifePoints(), dracula->MaxLifePoints(),p->showId());
@@ -65,7 +69,7 @@ int battle::IOManager(){ //ritorna il danno del oggetto che si è scelto
 	cout<<endl;
 	cout<<"Scegli l'oggetto che vuoi usare per colpire il "<<MonsterName<<":"<<endl;
 	int select=1;
-	for (int i=0; i<5; i++){
+	for (int i=0; i<5; i++){  //stampa tutto l'inventario del giocatore
 		if (p->showInventory()->slotIsFull(i)){
 			cout<<select<<") "<< p->showInventory()->getName(i)<< "(dmg "<<p->showInventory()->AccessObjectFromInventory(i)<<")"<<endl;
 			select++;
@@ -73,7 +77,7 @@ int battle::IOManager(){ //ritorna il danno del oggetto che si è scelto
 	}
 	select--;
 	int counter=select;
-	do{
+	do{ //praticamente serve a gestire i casi in cui l'inventario non è contiguo, in questo caso la scelta numerica da tastiera prende il primo,secondo,ecc oggetto esistente in base al num in input
 		select=manage->sanitycheck();
 		if ((select<1) || (select>counter)) cout<<"Devi selezionare un oggetto valido!"<<endl;
 	}while((select<1) || (select>counter));
@@ -83,7 +87,7 @@ int battle::IOManager(){ //ritorna il danno del oggetto che si è scelto
 	bool ispotion=false;
 	while (!exit){
 		if ((p->showInventory()->slotIsFull(i)) && (select==counter)){
-			if (p->showInventory()->AccessObjectFromInventory(i)==0){
+			if (p->showInventory()->AccessObjectFromInventory(i)==0){ //la pozione ha come convenzione 0 di danno, qui viene gestita l'aumento della salute del pg
 				p->lifeFix(-potionHP);
 				cout<<"usi la Pozione che ti restituisce "<<potionHP<<" HP!"<<endl;
 				p->showInventory()->deleteObject(i);
@@ -98,19 +102,19 @@ int battle::IOManager(){ //ritorna il danno del oggetto che si è scelto
 	if(!ispotion) return p->showInventory()->AccessObjectFromInventory(i);
     	else return 0;
 }
-void battle::WinScreen(){
+void battle::WinScreen(){ //quando si vince stampa un messaggio e chiama il drop oggetto
 	cout<<"			CONGRATULAZIONI HAI BATTUTO IL "<<MonsterName<<endl;
     manage->dropObject(p);
 }
-void battle::LoseScreen(){
+void battle::LoseScreen(){ //stampa il messaggio di morte, volevo usarla per chiamare il metodo di morte player ma è stato gestito direttamente dalla lista pg
 	cout<<"			SEI MORTO"<<endl;
 }
-void battle::HealthBar(int currenthpPlayer,int maxhpPlayer, int currenthpMonster,int maxhpMonster, int playerID){ //20 barrette
+void battle::HealthBar(int currenthpPlayer,int maxhpPlayer, int currenthpMonster,int maxhpMonster, int playerID){ //usa la vita max dei pg e del mostro per fare una semplice proporzione, usata per calcolare in numero di barrette della vita
 	cout<<"Player "<<playerID<<"                              "<<MonsterName<<endl;
 	cout<<" ____________________"<<"                 "<<" ____________________"<<endl;
 	cout<<'|';
 	int i=1;
-	while(i<=20){
+	while(i<=20){ //stampa le barrette vita
 		if(((20*currenthpPlayer)/maxhpPlayer)>=i)cout<<"█";
 		else cout<<' ';
 		i++;
@@ -126,7 +130,13 @@ void battle::HealthBar(int currenthpPlayer,int maxhpPlayer, int currenthpMonster
 	cout<<" --------------------"<<"                 "<<" --------------------"<<endl;
 	cout<<"      "<<currenthpPlayer<<"/"<<maxhpPlayer<<"                                "<<currenthpMonster<<"/"<<maxhpMonster<<endl;
 }
-int battle::CalculateDamage(int Damage){  //ritorna 0 se sono entrambi vivi 1 se il mostro è morto 2 se il giocatore è morto
+
+
+/* ritorna 0 se sono entrambi vivi, 1 se il mostro è morto, 2 se il giocatore è morto, il danno viene calcolato allo stesso momento quindi può succedere che mostro e giocatore
+ * si uccidano a vicenda; la morte del giocatore ha priorità su tutto infatti viene controllata alla fine, quando un mostro muore il suo oggetto viene cancellato dalla mem.
+ * il ritorno 0 (entrambi vivi) serve per far ciclare la funzione che gestisce i "turni" di battaglia, che sa in quel caso che il combattimento è ancora in corso.
+ */
+int battle::CalculateDamage(int Damage){
 	int status=0;
 	int beforebattle=p->life();
 		if (dracula!=NULL){
@@ -159,6 +169,6 @@ int battle::CalculateDamage(int Damage){  //ritorna 0 se sono entrambi vivi 1 se
 				status=1;
 			}
 		}
-	if (p->life()<=0) status=2;
+	if (p->life()<=0) status=2; //se il giocatore ha meno di 1 hp non importa se abbia ucciso il mostro, la funzione restituisce la sua morte
 	return status;
 }
