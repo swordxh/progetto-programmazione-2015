@@ -205,10 +205,6 @@ void Manage::builtQueue(){
     }
 }
 
-Queue* Manage::returnList(){
-    return l;
-}
-
 bool Manage::databaseEmpty(){
     if (database!=NULL) {
         return false;
