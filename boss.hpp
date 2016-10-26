@@ -24,9 +24,9 @@ public:
 
 class finale{
 protected:
-    Queue *l; // l serve per scorrere la lista, head è un riferimento per i turni
+    Queue *l; // l serve per scorrere la lista
     Node* p; //p = giocatore attuale; head = testa
-    Node* head;
+    Node* head; //head è un riferimento per i turni
     boss *b;
     Player *q;
     int k; // per ciclicità attacchi
@@ -37,8 +37,9 @@ protected:
     int scelto; //indica quale giocatore attaccare nell'attacco standard e in quello mortale
     const int potionHP=30;
     int m;
+    Manage *manage; //serve per sanitycheck() e per verificare che gli input da tastiera siano corretti
 public:
-	finale(Queue *p_curr, int n); // costruttore
+	finale(Queue *p_curr, int n, Manage *man); // costruttore
 	void battleManager(); // metodo che gestisce le basi della battaglia
 	int IOManager(); // permette al giocatore di accedere all'inventario
 	int CalculateDamage(int Damage);
