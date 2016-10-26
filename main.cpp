@@ -3,17 +3,17 @@
 #include "boss.hpp"
 
 int main(){
-    char nomespada[15];
+    char nomespada[30];
     strcpy(nomespada,"excalibur");
     Object spada=Object(nomespada,25);
-    char nomefucile[15];
+    char nomefucile[30];
     strcpy(nomefucile,"ak47");
     Object fucile=Object(nomefucile,13);
-    char nomepozione[15];
+    char nomepozione[30];
     strcpy(nomepozione,"potion");
     Object pozione=Object(nomepozione,0);
-    char nomebacchetta[15];
-    strcpy(nomebacchetta,"bacchetta");
+    char nomebacchetta[30];
+    strcpy(nomebacchetta,"bacchetta (oggetto base)");
     Object bacchetta=Object(nomebacchetta,10);
     Manage g=Manage();
     

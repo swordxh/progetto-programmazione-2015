@@ -276,8 +276,9 @@ void Manage::spawnMonsterOrObject(Player* giocatore){
     srand(time(0));
     die = (rand() % 100) +1;//DA DECIDERE VALORE VALORE
     if (die<=70) { //spawn mostro e inizio battaglia
-        battle b=battle(giocatore, this);
-        b.battleManager();
+        battle *b= new battle(giocatore, this);
+        b->battleManager();
+        delete b;
     }
     else{
         if (!this->databaseEmpty()) {
@@ -360,7 +361,7 @@ void Manage::spawnMonsterOrObject(Player* giocatore){
                         while (error) {
                             cout <<"Inserisci il numero dello lo slot dell'oggetto che vuoi sostituire: "<<endl;
                             slot=sanitycheck();
-                            if(slot>0 && slot<=5)error=false;
+                            if(slot>1 && slot<=5)error=false;
                             else cout<<"Attenzione: hai inserito uno slot non valido! ";
                         }
                     slot--;
@@ -459,7 +460,7 @@ void Manage::dropObject(Player* giocatore){
                 while (error) {
                     cout <<"Inserisci il numero dello lo slot dell'oggetto che vuoi sostituire: "<<endl;
                     slot=sanitycheck();
-                    if(slot>0 && slot<=5)error=false;
+                    if(slot>1 && slot<=5)error=false;
                     else cout<<"Attenzione: hai inserito uno slot non valido! "<<endl;
                 }
                 slot--;

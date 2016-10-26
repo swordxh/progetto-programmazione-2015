@@ -12,7 +12,7 @@ using namespace std;
 
 class Object{
 protected:
-    char name[20];
+    char name[30];
     int damage;
 public:
     Object();
