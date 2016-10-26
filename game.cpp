@@ -1,68 +1,50 @@
-        //
-//  main.cpp
-//  Progetto Programmazione
-//
-//  Created by Damiano Bellucci on 25/09/16.
-//  Copyright © 2016 Damiano Bellucci. All rights reserved.
-//
-
 #include "game.hpp"
 #include "battle.hpp"
 #include "provmappa.hpp"
 #include "boss.hpp"
-
 using namespace std;
 
-Object::Object(){
-    strcpy(name, "\0");
-    damage=0;
-}
 Object::Object(char nome[], int danno){ //costruttore  inizializzazione
-        strcpy(name, nome);
-        damage=danno;
-    }
+    strcpy(name, nome);
+    damage=danno;
+}
 int Object::Damage(){ //restituisce il danno che causa l'oggetto dall'oggetto3
         if (strcmp(name,"potion")==0) { //gestione del caso oggetto pozione: in questo caso il danno è 0
             return 0;
         }
         return damage;
     }
+
 char* Object::showNameObject(){
         return name;
-    }
-void Object::setObject(char nome[], int danno){
-    strcpy(name, nome);
-    damage=danno;
 }
 
 Inventory::Inventory(){
     int i=0;
     for (i=0;i<5;i++){
-        //slot[i]=false;
         oggetto[i]=NULL;
     }
 }
+
 bool Inventory::slotIsFull(int slotInventario){ //controlla se uno specifico slot dell'inventario è pieno
     if (oggetto[slotInventario]!=NULL) {
         return 1;
     }
     else return 0;
-    //return slot[slotInventario]; //ritorna 1 se è pieno, 0 altrimenti
+}
+
+int Inventory::AccessObjectFromInventory (int slotInventario){
+        return oggetto[slotInventario]->Damage();
     }
-int Inventory::AccessObjectFromInventory (int slotInventario){ //accede ad un oggetto dell'inventario
-        return oggetto[slotInventario]->Damage(); //ritorna il danno dell'oggetto a cui si è acceduti nell'inventario
-    }
-void Inventory::insertObject(Object oggettoDaInserire, int slotInventario){//inserisci oggetto nell'inventario
-    oggetto[slotInventario]=new Object;
+void Inventory::insertObject(Object oggettoDaInserire, int slotInventario){
+    oggetto[slotInventario]=new Object(oggettoDaInserire.showNameObject(),oggettoDaInserire.Damage());
     *oggetto[slotInventario]=oggettoDaInserire;
-        //slot[slotInventario]=1; //dopo l'inserimento, lo slot sarà pieno
-    }
+}
+
 void Inventory::deleteObject(int slotInventario){
-    //elimina oggetto dall'inventario
     Object* app=oggetto[slotInventario];
     delete app;
     oggetto[slotInventario]=NULL;
-    //slot[slotInventario]=0; //indico che lo slot nell'inventario corrispondente all'oggetto eliminato si è svuotato
     }
 char* Inventory::getName(int slotInventario){
         return oggetto[slotInventario]->showNameObject();
@@ -71,35 +53,36 @@ char* Inventory::getName(int slotInventario){
 Player::Player(){
 }
 
-Player::Player(int identificatore){ //costruttore player
-        inventario=new Inventory; //DA FIXARE!!! mettere inventario=NULL e inizializzarlo solo nel caso in cui viene inserito oggetto
-        id=identificatore;
-        lp=100;
-        maxlp=100;
+Player::Player(int identificatore){
+    id=identificatore;
+    lp=100;
+    maxlp=100;
     posizione=NULL;
+    inventario=new Inventory;
 }
 int Player::showId(){
         return id;
-    }
+}
+
 int Player::maxHp(){
     if (lp>maxlp) maxlp=lp;
     return maxlp;
 }
-int Player::life(){ //ritorna i punti vita del giocatore
-        if (lp>=0) return lp;
-        else return 0;
-    }
-void Player::lifeFix(int value){ //cambia vita del giocatore in base all'oggetto che gli si passa //da cambiare con input int, sennò mosse mostro non vengono prese
-        lp=lp-value;
-    }
+int Player::life(){
+    if (lp>=0) return lp;
+    else return 0;
+}
+
+void Player::lifeFix(int value){
+    lp=lp-value;
+}
+
 int Player::useObject(int slotInventary){ //ritorna il danno dell'oggetto scelto tra uno degli oggetti negli slot dell'inventario
         return inventario->AccessObjectFromInventory(slotInventary);
-    }
+}
+
 void Player::TakeObject(Object oggetto){ //inserisce un oggetto nel primo slot libero disponibile, i alla fine conterrà l'informazione della posizione dell'eventuale slot libero
         int i=0;
-    if (inventario==NULL) {
-        inventario=new Inventory;
-    }
         while (inventario->slotIsFull(i)) { //scorro nell'inventario per ricercare lo slot libero
             i++;
         }
@@ -107,9 +90,11 @@ void Player::TakeObject(Object oggetto){ //inserisce un oggetto nel primo slot l
             inventario->insertObject(oggetto,i);
         }
 }
+
 Inventory* Player::showInventory(){
         return inventario;
-    }
+}
+
 void Player::writesonoqui(stanza* room){
     posizione=room;
 }
@@ -118,28 +103,26 @@ stanza* Player::getsonoqui(){
     return posizione;
 }
 
+
+
+
 Queue::Queue(){
     q=NULL;
 }
 
 void Queue::enqueue (Player giocatore){
-
-
     if (q==NULL) {
         q=new Node;
         q->player=giocatore;
         q->next=q;
     }
     else{
-        Node* app/*=new node*/;
-        app=q;
+        Node* app=q;
         while (app->next!=q) {
             app=app->next;
         }
         Node* nodo=new Node;
-
         nodo->player=giocatore;
-        //cout<<&nodo->player<<" "<<&giocatore<<endl;
         nodo->next=q;
         app->next=nodo;
         nodo=NULL;
@@ -153,7 +136,6 @@ void Queue::dequeue(int idPlayer){
             q=NULL;
             delete app;
             app=NULL;
-
         }
         else{
             if ((q->player).showId()==idPlayer) { //caso in cui elimino elemento in testa in una lista di elementi
@@ -170,16 +152,14 @@ void Queue::dequeue(int idPlayer){
                 q=q->next;
                 delete app;
                 app=NULL;
+                
                 }
             else{ //caso generale eliminazione nodo
-                Node* p=new Node;
-                p=q;
-                bool flag=0;
+                Node* p=q;
 
                 while ((p->next->player).showId()!=idPlayer && p->next->next!=q) {//inizio a controllare dall'elemento dopo la testa visto che quest'ultima è già stata controllata nei casi prima. Caso in cui ho due elementi: non entro nel while
                     p=p->next;
                 }
-
                 if ((p->next->player).showId()==idPlayer) { //devo controllare che non sia finito nel caso in cui non c'è elemento cercato e abbia solo due nodi
                     Node* app=new Node;
                     app=p->next;
@@ -193,9 +173,10 @@ void Queue::dequeue(int idPlayer){
     }
 }
 
-Node* Queue::returnHead(){
+Node* Queue::Head(){
     return q;
 }
+
 bool Queue::isEmpty(){
     if (q!=NULL) {
         return false;
@@ -205,7 +186,7 @@ bool Queue::isEmpty(){
 
 Manage::Manage(){
     n=0;
-    l=NULL;
+    l=new Queue;
     database=NULL;
     defObj=NULL;
     nPlayers=0;
@@ -213,11 +194,8 @@ Manage::Manage(){
 }
 
 void Manage::builtQueue(){
-    
-    if (nPlayers>0)
-    {
+    if (nPlayers>0){
         int i=0;
-        l=new Queue;
         Queue *p=new Queue;
         for (i=0; i<nPlayers;i++) {
             Player app=Player(i+1);
@@ -237,10 +215,9 @@ bool Manage::databaseEmpty(){
     }
     return true;
 }
+
 void Manage::fetchDatabaseObjects(Object oggettoDelGioco){
     int j=0;
-    Object *app=new Object;
-    *app=oggettoDelGioco;
     if(database==NULL){
         int i=0;
         database=new databaseObject;
@@ -252,10 +229,8 @@ void Manage::fetchDatabaseObjects(Object oggettoDelGioco){
         j++;
     }
     if(j!=6){
-        database->oggetto[j]=new Object;
-        database->oggetto[j]=app;
+        database->oggetto[j]=new Object(oggettoDelGioco.showNameObject(),oggettoDelGioco.Damage());
     }
-    app=NULL;
 }
 
 int Manage::sanitycheck(){
@@ -265,20 +240,20 @@ int Manage::sanitycheck(){
         failed=false;
         cin>>num;
         if (cin.fail()){
-          cin.clear();
-          cin.ignore(1000,'\n');
-          cout<<"L'input dev'essere un intero!"<<endl;
-          failed=true;
-          }
-      }while(failed);
+            cin.clear();
+            cin.ignore(1000,'\n');
+            cout<<"L'input dev'essere un intero!"<<endl;
+            failed=true;
+        }
+    }while(failed);
     return num;
 }
 
 void Manage::spawnMonsterOrObject(Player* giocatore){
     int die = 0;
     srand(time(0));
-    die = (rand() % 100) +1;//DA DECIDERE VALORE VALORE
-    if (die<=70) { //spawn mostro e inizio battaglia
+    die = (rand() % 100) +1;
+    if (die<=70) {
         battle *b= new battle(giocatore, this);
         b->battleManager();
         delete b;
@@ -288,18 +263,15 @@ void Manage::spawnMonsterOrObject(Player* giocatore){
         if (!this->databaseEmpty()) {
         die = (rand() % 5) +1; //avendo 6 oggetti faccio uscire un numero tra 1 e 6 per selezionare un oggetto a caso da database oggetti
         int count=0;
-        
-        while (database->oggetto[die]==NULL && count<6 ) {
+        while (database->oggetto[die]==NULL && count<6) {
                 if (die==5){
-                        die=0;
+                    die=0;
                 }
                 else die++;
                 count++;
         }
-        
         bool error=true;
         int risposta=0;
-
             if (database->oggetto[die]!=NULL)
             {
                 cout<<"Il tuo inventario:"<<endl;
@@ -313,12 +285,10 @@ void Manage::spawnMonsterOrObject(Player* giocatore){
                     i++;
                 }
                 cout<<endl;
-                
                 while(error)
                 {
                 cout <<"Hai trovato l'oggetto "<<database->oggetto[die]->showNameObject()<<", vuoi prenderlo? [1]=SI [0]=NO: "<<endl;
                 risposta=sanitycheck();
-
                 if (risposta!=0 && risposta!=1)
                 {
                     error=true;
@@ -339,7 +309,6 @@ void Manage::spawnMonsterOrObject(Player* giocatore){
                 i++;
             }
             if (count==5) {
-                int i=0;
                 risposta=0;
                 bool error=true;
                 while(error){
@@ -372,8 +341,7 @@ void Manage::spawnMonsterOrObject(Player* giocatore){
                     giocatore->showInventory()->deleteObject(slot);
                     giocatore->TakeObject(*database->oggetto[die]);
                 }
-                else
-                {
+                else{
                     giocatore->TakeObject(*database->oggetto[die]);
                 }
             }
@@ -384,28 +352,26 @@ void Manage::spawnMonsterOrObject(Player* giocatore){
 
 void Manage::dropObject(Player* giocatore){
     if(!this->databaseEmpty()){
-    int die = 0;
-    srand(time(0));
-
-    die = (rand() % 5) +1; //avendo 6 oggetti faccio uscire un numero tra 1 e 6 per selezionare un oggetto a caso da database oggetti
-    int count=0;
-    while (database->oggetto[die]==NULL && count<6 ) {
+        int die = 0;
+        srand(time(0));
+        die = (rand() % 5) +1; //avendo 6 oggetti faccio uscire un numero tra 1 e 6 per selezionare un oggetto a caso da database oggetti
+        int count=0;
+        while (database->oggetto[die]==NULL && count<6 ) {
             if (die==5){
-            die=0;
+                die=0;
             }
             else die++;
             count++;
-    }
-    bool error=true;
-    int risposta=0;
-
-    if (database->oggetto[die]!=NULL)
-    {
-        while(error)
+        }
+        bool error=true;
+        int risposta=0;
+        
+        if (database->oggetto[die]!=NULL)
         {
+            while(error)
+            {
             cout <<"Il mostro aveva con sé l'oggetto "<<database->oggetto[die]->showNameObject()<<", vuoi prenderlo? [1]=SI [0]=NO: "<<endl;
             risposta=sanitycheck();
-
             if (risposta!=0 && risposta!=1)
             {
                 error=true;
@@ -416,69 +382,64 @@ void Manage::dropObject(Player* giocatore){
             }
         }
     }
-    if (risposta==1) { //stampo inventario e gestisco sostituzione oggetto se inventario è pieno
-        int i=0;
-        int count=0;
-        while (i<5) {
-            if(giocatore->showInventory()->slotIsFull(i)){
-                count++;
-                //cout<<i+1<<")"<<giocatore->showInventory()->getName(i)<<endl;
-            }
-
-            i++;
-        }
-        cout<<endl;
-        if (count==5) {
+        if (risposta==1) { //stampo inventario e gestisco sostituzione oggetto se inventario è pieno
             int i=0;
-            cout<<"Il tuo inventario:"<<endl;
+            int count=0;
             while (i<5) {
                 if(giocatore->showInventory()->slotIsFull(i)){
-                cout<<i+1<<")"<<giocatore->showInventory()->getName(i)<<endl;
+                    count++;
                 }
-                
                 i++;
             }
-            risposta=0;
-            error=true;
-            while(error){
-                cout <<"Il tuo inventario è pieno! Vuoi prendere comunque l'oggetto sostituendolo con uno del tuo inventario? [1]=SI [0]=NO: ";
-                risposta=sanitycheck();
-                cout <<endl;
-
-                if (risposta!=0 && risposta!=1)
-                {
-                    //cout<<"Inserisci un comando valido! "<<endl;
+            cout<<endl;
+            if (count==5) {
+                int i=0;
+                cout<<"Il tuo inventario:"<<endl;
+                while (i<5) {
+                    if(giocatore->showInventory()->slotIsFull(i)){
+                        cout<<i+1<<")"<<giocatore->showInventory()->getName(i)<<endl;
+                    }
+                    i++;
+            }
+                risposta=0;
+                error=true;
+                while(error){
+                    cout <<"Il tuo inventario è pieno! Vuoi prendere comunque l'oggetto sostituendolo con uno del tuo inventario? [1]=SI [0]=NO: ";
+                    risposta=sanitycheck();
+                    cout <<endl;
+                    if (risposta!=0 && risposta!=1)
+                    {
                     error=true;
+                    }
+                    else
+                    {
+                    error=false;
+                    }
+                }
+            }
+            if (risposta==1) {
+                if (count==5){
+                    int slot;
+                    error=true;
+                    while (error) {
+                        cout <<"Inserisci il numero dello lo slot dell'oggetto che vuoi sostituire: "<<endl;
+                        slot=sanitycheck();
+                        if(slot>1 && slot<=5)error=false;
+                        else cout<<"Attenzione: hai inserito uno slot non valido! "<<endl;
+                    }
+                    slot--;
+                    giocatore->showInventory()->deleteObject(slot);
+                    giocatore->TakeObject(*database->oggetto[die]);
                 }
                 else
                 {
-                    error=false;
+                    giocatore->TakeObject(*database->oggetto[die]);
                 }
             }
         }
-        if (risposta==1) {
-            if (count==5){
-                int slot;
-                error=true;
-
-                while (error) {
-                    cout <<"Inserisci il numero dello lo slot dell'oggetto che vuoi sostituire: "<<endl;
-                    slot=sanitycheck();
-                    if(slot>1 && slot<=5)error=false;
-                    else cout<<"Attenzione: hai inserito uno slot non valido! "<<endl;
-                }
-                slot--;
-                giocatore->showInventory()->deleteObject(slot);
-                giocatore->TakeObject(*database->oggetto[die]);
-            }
-            else
-            {
-                giocatore->TakeObject(*database->oggetto[die]);
-            }
-        }
-    }
     }
 }
+
 
 void Manage::setRounds(int n){
     nRounds=n;
@@ -490,23 +451,19 @@ void Manage::setPlayers(int n){
 void Manage::assignDefaultObject(){
     if(defObj!=NULL){
         int i=0;
-        Node* app=this->returnList()->returnHead();
+        Node* app=l->Head();
         for (i=0; i<nPlayers; i++) {
-        app->player.TakeObject(*defObj);
-        app=app->next;
+            app->player.TakeObject(*defObj);
+            app=app->next;
+        }
+        app=NULL;
     }
-    app=NULL;
-    /*delete app;*/
-    }
-    
 }
+
 void Manage::setDefaultObject(Object oggetto){
-    defObj=new Object;
-    Object* app=new Object;
-    *app=oggetto;
-    defObj=app;
-    app=NULL;
+    defObj=new Object(oggetto.showNameObject(),oggetto.Damage());
 }
+
 void Manage::startGame(){
     int nplayers=0;
     int nrounds=0;
@@ -515,7 +472,7 @@ void Manage::startGame(){
     bool flag=false;
     bool retry=false;
     int appdeath=-1;
-    
+
     cout<<"Inserisci numero giocatori: ";
     do{
       retry=false;
@@ -547,9 +504,9 @@ void Manage::startGame(){
     bool newroom=false;
     char dir;
     
-    Node* app=l->returnHead();
+    Node* app=l->Head();
 
-    while (l->returnHead()!=NULL && roundsCounter<nRounds){
+    while (l->Head()!=NULL && roundsCounter<nRounds){
         roundsCounter++;
         cout<<"ROUND "<<roundsCounter<<endl;
         
@@ -558,14 +515,14 @@ void Manage::startGame(){
             mappa.stampa();
             if (app->player.getsonoqui()==NULL)app->player.writesonoqui(basemappa);
             cout << "Giocatore "<<app->player.showId()<<" fai la tua mossa! [W]=Nord, [S]=sud, [A]=ovest, [D]=est"<<endl;
-              do{
+            do{
                 retry=false;
                 cin>>dir;
                 if ((dir!='w') && (dir!='a') && (dir!='s') && (dir!='d')){
                     retry=true;
                     cout<<"devi inserire uno dei seguenti caratteri minuscoli! w a s d"<<endl;
-                  }
-              }while (retry);
+                }
+            }while (retry);
             newroom=mappa.new_direction(dir, &app->player);
             if (newroom)this->spawnMonsterOrObject(&app->player); //battaglia o trova oggetto
             if(app->player.life()<=0){ //Se giocatore è morto lo elimino dalla lista
@@ -579,10 +536,10 @@ void Manage::startGame(){
                 ndead++;
             }
             if (!flag && app!=NULL)app=app->next; //se non c'è stata eliminazione e coda non è vuota faccio scorrere app
-        }while (app!=l->returnHead());
+        }while (app!=l->Head());
     }
     app=NULL;
-    if (l->returnHead()!=NULL){
+    if (l->Head()!=NULL){
         finale fine(l, nPlayers-ndead, this);
         fine.battleManager();
     }
