@@ -538,9 +538,15 @@ void Manage::startGame(){
             mappa.stampa();
             if (app->player.getsonoqui()==NULL)app->player.writesonoqui(basemappa);
             cout << "Giocatore "<<app->player.showId()<<" fai la tua mossa! [W]=Nord, [S]=sud, [A]=ovest, [D]=est"<<endl;
+            bool retry=false;
               do{
+                retry=false;
                 cin>>dir;
-              }while ((dir!='w') && (dir!='a') && (dir!='s') && (dir!='d'));
+                if ((dir!='w') && (dir!='a') && (dir!='s') && (dir!='d')){
+                    retry=true;
+                    cout<<"devi inserire uno dei seguenti caratteri minuscoli! w a s d"<<endl;
+                  }
+              }while (retry);
             newroom=mappa.new_direction(dir, &app->player);
             if (newroom)this->spawnMonsterOrObject(&app->player); //battaglia o trova oggetto
             if(app->player.life()<=0){ //Se giocatore è morto lo elimino dalla lista
