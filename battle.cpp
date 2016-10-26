@@ -48,6 +48,7 @@ void battle::battleManager(){
 				HealthBar(p->life(), p->maxHp(), spiderman->LifePoints(), spiderman->MaxLifePoints(),p->showId());
 			}
 			stato=CalculateDamage(IOManager()); //questa è la funzione che calcola il danno del mostro e del giocatore, prende in input un altra funzione che chiede quale oggetto si vuole scegliere
+			cout<<"----------------------------------------------------------------------------------------------"<<endl<<endl;
 		}
 		if (dracula!=NULL){
 			HealthBar(p->life(), p->maxHp(), dracula->LifePoints(), dracula->MaxLifePoints(),p->showId());
