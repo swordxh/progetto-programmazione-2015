@@ -14,7 +14,7 @@ battle::battle(Player *p_curr, Manage *man)
 void battle::getRandomMonster(){ //aggiorna i puntatori null del costruttore ad uno dei vari mostri, effettivamente spawna 1 solo mostro a round
 	int dice=0;
 	srand(time(0));
-	dice = (rand()%100)+1;
+	dice = (rand()%150)+1;
 	if (dice <=35){
 		dracula = new Vampire();
 		strcpy(MonsterName, dracula->GetName());

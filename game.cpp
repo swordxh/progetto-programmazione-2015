@@ -279,6 +279,7 @@ void Manage::spawnMonsterOrObject(Player* giocatore){
         battle *b= new battle(giocatore, this);
         b->battleManager();
         delete b;
+        b=NULL;
     }
     else{
         if (!this->databaseEmpty()) {
