@@ -49,7 +49,7 @@ Queue* finale::returnList(){
     return l;
 }
 void finale::battleManager(){
-    head = this -> returnList() -> returnHead();
+    head = this -> returnList() ->Head();
     if (b == NULL) {
         b = new boss(&nPlayers);
         strcpy(MonsterName, b->GetName());
@@ -60,9 +60,9 @@ void finale::battleManager(){
     cout << "Nessun sinistro rumore di passi..." << endl;
     cout << "Come se tutto cio' fosse la quiete prima della tempesta..." <<endl;
     cout<<endl<<endl<<endl<<"Il "<<MonsterName<<" ti attacca, inizi cosi a difenderti."<<endl;
-    p = this -> returnList() -> returnHead(); // mi metto nella testa della lista
+    p = this -> returnList() ->Head(); // mi metto nella testa della lista
     while (stato==0){
-        p=this->returnList()->returnHead();
+        p=this->returnList()->Head();
         for(int j = 0; j < nPlayers; j++){
             q = &p -> player; //prendo il campo "player"
             if (b!=NULL){
@@ -179,7 +179,7 @@ void finale::HealthBar(int currenthpPlayer,int maxhpPlayer, int currenthpMonster
         else cout << "     ";
         i++;
     }// la V indica il giocatore attuale
-    Node* scorr = this->returnList()->returnHead();
+    Node* scorr = this->returnList()->Head();
     Player* q1 = &scorr -> player;
     for(i = 1; i <= nPlayers; i++){
         q1 = &scorr -> player;
@@ -188,7 +188,7 @@ void finale::HealthBar(int currenthpPlayer,int maxhpPlayer, int currenthpMonster
         scorr = scorr -> next;
     }//rappresenta gli ID dei giocatori
     cout<<endl;
-    scorr = this->returnList()->returnHead();
+    scorr = this->returnList()->Head();
     for(i = 1; i <= nPlayers; i++){
         q1 = &scorr -> player;
         if ((q1 -> life()) >= 100) cout << q1 -> life() << "/" << q1 -> maxHp(); //la salute massima è dinamica
@@ -203,7 +203,7 @@ int finale::CalculateDamage(int Damage){  //ritorna 0 se sono entrambi vivi 1 se
         if (b!=NULL){
         if (att != (-1)) b->GotHit(Damage); // il boss subisce danni dal giocatore
         else{
-            Node* scorr = this->returnList()->returnHead();
+            Node* scorr = this->returnList()->Head();
             Player *q1 = &scorr -> player;
             if ((k % 3) == 0) {
                 att = q1 -> life();
@@ -218,7 +218,7 @@ int finale::CalculateDamage(int Damage){  //ritorna 0 se sono entrambi vivi 1 se
                     if (scorr == head) att = -1; //Sono ritornato alla testa? se sì, do a "att" il valore -1
                 } //cerca il giocatore con meno vita
                 att = (-1);
-                scorr = this->returnList()->returnHead();
+                scorr = this->returnList()->Head();
                 while (att == (-1)){
                     q1 = &scorr -> player;
                     if ((q1 -> showId()) == scelto){
@@ -228,8 +228,8 @@ int finale::CalculateDamage(int Damage){  //ritorna 0 se sono entrambi vivi 1 se
                             cout << "IL GIOCATORE " << q1 ->showId() << " E' MORTO" << endl;
                             l -> dequeue (q1 -> showId());
                             nPlayers--;
-                            p=this->returnList()->returnHead();
-                            head = this -> returnList() -> returnHead();
+                            p=this->returnList()->Head();
+                            head = this -> returnList() ->Head();
                         }//caso in cui ho una lista di almeno 2 elementi, dove faccio dequeue e aggiorno i puntatori
                         att = 1;
                     }
@@ -247,8 +247,8 @@ int finale::CalculateDamage(int Damage){  //ritorna 0 se sono entrambi vivi 1 se
                             cout << "IL GIOCATORE " << q1 ->showId() << " E' MORTO" << endl;
                             l -> dequeue (q1 -> showId());
                             nPlayers--;
-                            p=this->returnList()->returnHead();
-                            head = this -> returnList() -> returnHead();
+                            p=this->returnList()->Head();
+                            head = this -> returnList() ->Head();
                         }//caso in cui ho una lista di almeno 2 elementi, dove faccio dequeue e aggiorno i puntatori
                     }
                     scorr = scorr -> next; //va al nodo successivo
@@ -268,8 +268,8 @@ int finale::CalculateDamage(int Damage){  //ritorna 0 se sono entrambi vivi 1 se
                                 cout << "IL GIOCATORE " << q1 ->showId() << " E' MORTO" << endl;
                                 l -> dequeue (q1 -> showId());
                                 nPlayers--;
-                                p=this->returnList()->returnHead();
-                                head = this -> returnList() -> returnHead();
+                                p=this->returnList()->Head();
+                                head = this -> returnList() ->Head();
                             }//caso in cui ho una lista di almeno 2 elementi, dove faccio dequeue e aggiorno i puntatori
                         }
                         Damage = 1; //ho finito, posso uscire dal while
