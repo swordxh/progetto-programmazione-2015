@@ -15,7 +15,6 @@ void battle::getRandomMonster(){
 	int dice=0;
 	srand(time(0));
 	dice = (rand()%100)+1;
-	cout<<dice;
 	if (dice <=35){
 		dracula = new Vampire();
 		strcpy(MonsterName, dracula->GetName());

@@ -99,7 +99,7 @@
             stanza* stvecchia = g1->getsonoqui();
             int ix = stvecchia->getx();
             int iy = stvecchia->gety();
-            cout<<"\nstanza vecchia is "<< ix<< iy<< "\n"; //cout di prova
+            //cout<<"\nstanza vecchia is "<< ix<< iy<< "\n"; //cout di prova
 
             bool crea = true;
             ///i ptr vengono aggiornati alla creazione della stanza, quindi se un ptr è!=NULL li c'è già una stanza
@@ -112,7 +112,7 @@
             if (crea){
                 //aggiungiamo la stanza: headinsert della stanza, con x e y e tutti i ptr a NULL
                 // aggiorna la lista e xmin ymax ymin
-                cout<< "\ncreazione!!\n"; //cout di prova
+                //cout<< "\ncreazione!!\n"; //cout di prova
                 if (dir == 'w'){
                         SThead_insert (ix, iy+1);
                         if ( iy+1 > ymax ){ymax = iy+1;}
@@ -130,7 +130,7 @@
                         if ( ix-1 < xmin ){xmin = ix-1;}
                 }
                 //stanza nuova creata e NESSUN PTR A POSTO!!!
-                cout<<"\nstanza creata, ptr ancora da sistemare\n"; //cout di prova
+                //cout<<"\nstanza creata, ptr ancora da sistemare\n"; //cout di prova
 
                 ptr_listast gigi = getST();
                 int xu = SThead->room.getx(); //x della stanza nuova
@@ -168,9 +168,9 @@
              ///ora spostare il Player
             ptr_listapl satana;
             satana = stvecchia->rimuv_Player (g1->showId(), stvecchia->get_pls()) ;
-            cout<<"\nsatana all'opera\n";
+            //cout<<"\nsatana all'opera\n";
             stvecchia->write_pls(satana);
-            cout<<"rimozione Player fatta!! qui va!\n";
+            //cout<<"rimozione Player fatta!! qui va!\n";
 
 
             //SThead->room.add_Player(g1->showId()); //così lo metteva nella stanza in testa
@@ -178,7 +178,7 @@
             else if (dir=='a'){ stvecchia->getwest()->add_Player(g1->showId()) ; }
             else if (dir=='s'){ stvecchia->getsud()->add_Player(g1->showId()) ; }
             else if (dir=='d'){ stvecchia->getest()->add_Player(g1->showId()) ; }
-            cout<<"add_Player fatta!! qui va!\n";
+            //cout<<"add_Player fatta!! qui va!\n";
 
             //g1->writesonoqui(&SThead->room); //così lo metteva nella stanza in testa
             if (dir=='w'){ g1->writesonoqui(stvecchia->getnord()) ;}
@@ -186,7 +186,7 @@
             else if (dir=='s'){ g1->writesonoqui(stvecchia->getsud()) ;}
             else if (dir=='d'){ g1->writesonoqui(stvecchia->getest()) ;}
             ///sonoqui va all'INDIRIZZO DELLA STANZA
-            cout<<"writesonoqui fatta!! qui va!\n";
+            //cout<<"writesonoqui fatta!! qui va!\n";
             return crea;
         }///fine new_direction
         int Map::numCifre(int x){
@@ -204,7 +204,7 @@
 
         void Map::stampa (){
             cout<<"\n\n"; //inizio mappa un po' staccato da (qualunque cosa ci fosse prima)
-            cout<<"\nxmin "<<xmin<<"\nymax "<<ymax<<"\nymin "<<ymin<<"\n\n";
+            //cout<<"\nxmin "<<xmin<<"\nymax "<<ymax<<"\nymin "<<ymin<<"\n\n";
             for ( int riga = ymax ; riga >= ymin ; riga-- ){///per ogni riga
                 ptr_listast scorro = SThead; //lo vede, è un campo della classe
                 while (scorro->room.gety() != riga) { scorro = scorro->next; }

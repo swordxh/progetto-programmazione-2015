@@ -526,7 +526,7 @@ void Manage::startGame(){
     bool newroom=false;
     char dir;
     Node* app=this->returnList()->returnHead();
-    finale fine(this->returnList(), nPlayers);
+    finale fine(this->returnList(), nPlayers, this);
     while (!(this->returnList())->isEmpty() && roundsCounter<nRounds){
         ndead=0;
         roundsCounter++;
@@ -541,7 +541,6 @@ void Manage::startGame(){
               do{
                 cin>>dir;
               }while ((dir!='w') && (dir!='a') && (dir!='s') && (dir!='d'));
-            cout<<dir;
             newroom=mappa.new_direction(dir, &app->player);
             if (newroom)this->spawnMonsterOrObject(&app->player); //battaglia o trova oggetto
             if(app->player.life()<=0){ //Se giocatore è morto lo elimino dalla lista
@@ -555,7 +554,7 @@ void Manage::startGame(){
         //app=NULL; (meglio qui)
     }
     if (l->returnHead()!=NULL)fine.battleManager();
-    else cout<<"AVETE PERSO!!!!";
+    else cout<<"              AVETE PERSO!!!!";
     app=NULL;    
     //SPAWN MOSTRO
     
