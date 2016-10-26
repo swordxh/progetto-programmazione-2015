@@ -7,6 +7,7 @@
 #include <string.h>
 #include <iostream>
 #include "sourcestanza.hpp"
+#include "provmappa.hpp"
 using namespace std;
 
 
@@ -15,18 +16,15 @@ protected:
     char name[30];
     int damage;
 public:
-    Object();
     Object(char nome[], int danno);
     int Damage();
     char* showNameObject();
-    void setObject(char nome[], int danno);
 };
 
 class Inventory{
 protected:
     Object *oggetto[5]; //l'inventario è composto al massimo da 5 oggetti
-    //bool slot[5]; //booleano che indica se uno slot dell'inventario pieno o vuoto
-public:
+    public:
     Inventory();
     bool slotIsFull(int slotInventario);
     int AccessObjectFromInventory (int slotInventario);
@@ -60,18 +58,16 @@ struct Node{
     Player player;
     struct Node* next;
 };
-//typedef struct Node node;
 
 class Queue{
 protected:
     Node* q; //puntatore al primo nodo della lista
 public:
     Queue();
-    void enqueue (Player giocatore); //input id del player
-    void dequeue(int idPlayer); //torna la testa della lista in quanto potrebbe cambiare se il primo della lista viene eliminato
+    void enqueue (Player giocatore);
+    void dequeue(int idPlayer);
     bool isEmpty();
-    Queue* returnListPointer();
-    Node* returnHead();
+    Node* Head();
 };
 
 struct databaseObject{
@@ -82,12 +78,12 @@ typedef struct databaseObject databaseObject;
 class Manage{
 protected:
     int n;
-    Queue *l; //puntatore all'oggetto lista
+    Queue *l;
     databaseObject* database;
     int nPlayers;
     int nRounds;
     Object* defObj;
-    //map
+    //map?
 public:
     Manage();
     void builtQueue();
@@ -99,8 +95,7 @@ public:
     void setPlayers(int n);
     void startGame();
     int sanitycheck();
-    Queue* returnList();
     void assignDefaultObject();
     void setDefaultObject(Object oggetto);
 };
-#endif /* GAME_HPP_ */
+#endif
