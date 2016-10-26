@@ -458,7 +458,7 @@ void Manage::dropObject(Player* giocatore){
 
                 while (error) {
                     cout <<"Inserisci il numero dello lo slot dell'oggetto che vuoi sostituire: "<<endl;
-                    slot=sanitycheck();;
+                    slot=sanitycheck();
                     if(slot>0 && slot<=5)error=false;
                     else cout<<"Attenzione: hai inserito uno slot non valido! "<<endl;
                 }
@@ -509,13 +509,28 @@ void Manage::startGame(){
     int roundsCounter=0;
     int ndead=0;
     int nDeath=0;
+    bool retry=false;
     cout<<"Inserisci numero giocatori: ";
-    nplayers=sanitycheck();;
+    do{
+      retry=false;
+      nplayers=sanitycheck();
+      if (nplayers<1){
+          retry=true;
+          cout<<"devi inserire un numero maggiore di 0!"<<endl;
+        }
+    }while (retry);
     cout<<endl;
     this->setPlayers(nplayers);
     
     cout<<"Inserisci numero rounds per giocatore: ";
-    nrounds=sanitycheck();;
+    do{
+      retry=false;
+      nrounds=sanitycheck();
+      if (nrounds<1){
+          retry=true;
+          cout<<"devi inserire un numero maggiore di 0!"<<endl;
+        }
+    }while (retry);
     cout<<endl;
     this->setRounds(nrounds);
     
@@ -538,7 +553,6 @@ void Manage::startGame(){
             mappa.stampa();
             if (app->player.getsonoqui()==NULL)app->player.writesonoqui(basemappa);
             cout << "Giocatore "<<app->player.showId()<<" fai la tua mossa! [W]=Nord, [S]=sud, [A]=ovest, [D]=est"<<endl;
-            bool retry=false;
               do{
                 retry=false;
                 cin>>dir;
