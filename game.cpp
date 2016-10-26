@@ -507,11 +507,12 @@ void Manage::setDefaultObject(Object oggetto){
 void Manage::startGame(){
     int nplayers=0;
     int nrounds=0;
-    bool error=true;
     int roundsCounter=0;
     int ndead=0;
-    int nDeath=0;
+    bool flag=false;
     bool retry=false;
+    int appdeath=-1;
+    
     cout<<"Inserisci numero giocatori: ";
     do{
       retry=false;
@@ -542,16 +543,15 @@ void Manage::startGame(){
     stanza* basemappa=mappa.initiatestanze();
     bool newroom=false;
     char dir;
-    Node* app=this->returnList()->returnHead();
-    finale fine(this->returnList(), nPlayers, this);
-    while (!(this->returnList())->isEmpty() && roundsCounter<nRounds){
-        ndead=0;
+    
+    Node* app=l->returnHead();
+
+    while (l->returnHead()!=NULL && roundsCounter<nRounds){
         roundsCounter++;
         cout<<"ROUND "<<roundsCounter<<endl;
-
-        Node* app=this->returnList()->returnHead();
-        int i=0;
-        for (i=0; i<(nPlayers-nDeath); i++) {
+        
+        do{
+            flag=false;
             mappa.stampa();
             if (app->player.getsonoqui()==NULL)app->player.writesonoqui(basemappa);
             cout << "Giocatore "<<app->player.showId()<<" fai la tua mossa! [W]=Nord, [S]=sud, [A]=ovest, [D]=est"<<endl;
@@ -566,19 +566,24 @@ void Manage::startGame(){
             newroom=mappa.new_direction(dir, &app->player);
             if (newroom)this->spawnMonsterOrObject(&app->player); //battaglia o trova oggetto
             if(app->player.life()<=0){ //Se giocatore è morto lo elimino dalla lista
-                l->dequeue(app->player.showId());
+                flag=true;
+                appdeath=app->player.showId();
+                app=app->next; //prima di eliminare nodo lista devo far scorrere app perchè sta puntando il nodo da eliminare
+                if (app->next==app) { //nel caso in cui devo eliminare l'unico elemento nella lista app non potrà puntare al successivo (in quanto il successivo è sempre il primo elemento che andrà eliminato
+                    app=NULL;
+                }
+                l->dequeue(appdeath);
                 ndead++;
             }
-            app=app->next;
-            
-        }
-        nDeath=nDeath+ndead;
-        //app=NULL; (meglio qui)
+            if (!flag && app!=NULL)app=app->next; //se non c'è stata eliminazione e coda non è vuota faccio scorrere app
+        }while (app!=l->returnHead());
     }
-    if (l->returnHead()!=NULL)fine.battleManager();
+    app=NULL;
+    if (l->returnHead()!=NULL){
+        finale fine(l, nPlayers-ndead, this);
+        fine.battleManager();
+    }
     else cout<<"              AVETE PERSO!!!!";
-    app=NULL;    
-    //SPAWN MOSTRO
-    
-    
+    delete l;
+    l=NULL;
 }
