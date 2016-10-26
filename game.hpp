@@ -7,7 +7,6 @@
 #include <string.h>
 #include <iostream>
 #include "sourcestanza.hpp"
-#include "provmappa.hpp"
 using namespace std;
 
 
@@ -99,3 +98,4 @@ public:
     void setDefaultObject(Object oggetto);
 };
 #endif
+
