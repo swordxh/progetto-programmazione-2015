@@ -30,20 +30,22 @@ void stanza:: add_Player(int idPleier){  ///head_insert, pls è sempre puntatore
 
 ptr_listapl stanza:: rimuv_Player(int idP2remove, ptr_listapl head){ //ritorno ptr alla testa della lista aggiornata
             ///prende ptr alla testa e id del Player da rimuovere(si è spostato) lo trova e lo rimuove
-            ptr_listapl tmp = new lista_Players;
-            tmp = head; //scorro con tmp
-            if ( tmp->idPlayer == idP2remove ){ //caso Player in 1.nodo
-                tmp=tmp->next_pl;
-                head=tmp;
-                return head;
+            ptr_listapl tmp = head; //scorro con tmp
+            ptr_listapl tmp2=tmp;
+            if (head==NULL)return NULL;
+            else if ( tmp->idPlayer == idP2remove ){ //caso Player in 1.nodo
+                tmp2=tmp2->next_pl;
+                delete tmp;
+                tmp=NULL;
+                return tmp2;
             }
             else{
-                ptr_listapl prec = new lista_Players;
-                prec = tmp;
                 tmp = tmp->next_pl;
-                while ( tmp->idPlayer != idP2remove ) {tmp=tmp->next_pl; prec=prec->next_pl;} //avanzano insieme
+                while ( tmp->idPlayer != idP2remove ) {tmp=tmp->next_pl; tmp2=tmp2->next_pl;} //avanzano insieme
                 //ora tmp punta al nodo da rimuovere
-                prec->next_pl = tmp->next_pl; //funziona anche se è l'ultimo
+                tmp=tmp->next_pl;
+                delete tmp2->next_pl;
+                tmp2->next_pl = tmp; //funziona anche se è l'ultimo
                 return head;
             }
         }//fine rimuv_Player

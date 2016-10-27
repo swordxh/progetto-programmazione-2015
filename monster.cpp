@@ -91,29 +91,27 @@ int Spider::getDmg(Player* p1){
 	int firsthit; //primo oggetto non default
 	srand(time(0));
 	dice = (rand()%100)+1;
-	if (dice<=45){
-		for (int i=1;i<5;i++){ //segno il primo oggetto beccato
-			if (p1->showInventory()->slotIsFull(i)){
-			hasobj=true; //segno che ha almeno 1 oggetto
-			firsthit=i;
-			}
+	for (int i=1;i<5;i++){ //segno il primo oggetto beccato
+		if (p1->showInventory()->slotIsFull(i)){
+		hasobj=true; //segno che ha almeno 1 oggetto
+		firsthit=i;
 		}
-		if (hasobj){
-			int fermacpu=0;
-			do {
-				srand(time(0));
-				dice = (rand()%4)+1;
-				fermacpu++; //dopo 100 cicli di while inutili suppongo che il random continui con quel andamento,allora esco
-			}while ((!(p1->showInventory()->slotIsFull(dice))) && fermacpu<=100);
-			cout<<"Il " <<name<< ", con la sua lesta ragnatela, arpiona il tuo zaino e ti ruba un oggetto!";
-			if (fermacpu<=100){
-				cout<<" ("<< p1->showInventory()->getName(dice) << ")"<<endl;
-				p1->showInventory()->deleteObject(dice); //cancello il primo oggetto
-			}
-			else {
-				cout<<" ("<< p1->showInventory()->getName(firsthit) << ")"<<endl;
-				p1->showInventory()->deleteObject(firsthit); //cancello l'oggetto trovato da random
-			}
+	}
+	if (dice<=45 && hasobj){
+		int fermacpu=0;
+		do {
+			srand(time(0));
+			dice = (rand()%4)+1;
+			fermacpu++; //dopo 100 cicli di while inutili suppongo che il random continui con quel andamento,allora esco
+		}while ((!(p1->showInventory()->slotIsFull(dice))) && fermacpu<=100);
+		cout<<"Il " <<name<< ", con la sua lesta ragnatela, arpiona il tuo zaino e ti ruba un oggetto!";
+		if (fermacpu<=100){
+			cout<<" ("<< p1->showInventory()->getName(dice) << ")"<<endl;
+			p1->showInventory()->deleteObject(dice); //cancello il primo oggetto
+		}
+		else {
+			cout<<" ("<< p1->showInventory()->getName(firsthit) << ")"<<endl;
+			p1->showInventory()->deleteObject(firsthit); //cancello l'oggetto trovato da random
 		}
 	}
 	else return monster::getDmg(); //se l'abilità non si è attivata ritrono il danno del mostro
