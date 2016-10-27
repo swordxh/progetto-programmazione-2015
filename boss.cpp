@@ -288,6 +288,8 @@ int finale::CalculateDamage(int Damage){  //ritorna 0 se sono entrambi vivi 1 se
             status=1;
             } // il boss è morto
         }
+        else status=1;
+
 
         return status;
 }
