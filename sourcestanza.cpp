@@ -1,10 +1,5 @@
+//
 #include "sourcestanza.hpp"
-
-///la stanza NON DEVE INCLUDERE IL PLAYER VERO! funziona indipendentemente!
-
-
-
-//lista_Players è già definita nell'header, scrivendola anche qui si lamenta perchè viene ridefinita
 
 
 stanza:: stanza(){x=0; y=0; nord=sud=est=west=NULL; pls=NULL;}
@@ -30,16 +25,11 @@ void stanza:: add_Player(int idPleier){  ///head_insert, pls è sempre puntatore
             tmp->next_pl = pls;  //se pls era null, va a null; se era altro, tmp gli si metterà davanti
             tmp->idPlayer = idPleier;
             pls = tmp;
-        }///riesce ad aggiornare pls, lo vede in quanto campo della classe
+        }
 
 
 ptr_listapl stanza:: rimuv_Player(int idP2remove, ptr_listapl head){ //ritorno ptr alla testa della lista aggiornata
-            ///prende ptr alla testa e id del Player da rimuovere(si è spostato), trova il
-            ///palyer(scorrendo i presenti nella stanza)(ricordate che è solo un id!!) e lo rimuove
-            ///PRECONDITION: DA CHIAMARE SOLO SE [___C'è IL PLAYER___] O CRASHA (così funge anche da test!)
-            ///nel senso che nel resto del codice questa funzione viene chiamata solo in casi in cui il Player
-            /// era effettivamente li e si è spostato, ergo è da rimuovere, quindi se finisce per dover rimuovere
-            /// un Player non presente significa che c'è stato un errore in un altro pezzo del codice!
+            ///prende ptr alla testa e id del Player da rimuovere(si è spostato) lo trova e lo rimuove
             ptr_listapl tmp = new lista_Players;
             tmp = head; //scorro con tmp
             if ( tmp->idPlayer == idP2remove ){ //caso Player in 1.nodo
