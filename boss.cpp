@@ -5,8 +5,8 @@ boss::boss(int *nPlayers){
         strcpy(name,"Drago\0"); // nome
         MaxHp= (*nPlayers * 100) * z; // "n" = numero giocatori, "z" = fattore che moltiplica vita
         Hp=MaxHp;
-        damagest = 20; // attacco standard
-        damage1 = 10; // attacco che colpisce tutti i giocatori
+        damagest = 10; // attacco standard
+        damage1 = 5; // attacco che colpisce tutti i giocatori
 }
 char *boss::GetName(){
         return name;
@@ -44,6 +44,7 @@ finale::finale(Queue *p_curr, int n, Manage *man){
     Node* scorr = head;; //con scorr vedo l'id più alto, così assegno n
     nPlayers = n;
     delete scorr;
+    potionHP=45;
 }
 Queue* finale::returnList(){
     return l;

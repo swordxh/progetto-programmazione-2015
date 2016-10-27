@@ -5,10 +5,10 @@
 int main(){
     char nomespada[30];
     strcpy(nomespada,"excalibur");
-    Object spada=Object(nomespada,25);
+    Object spada=Object(nomespada,20);
     char nomefucile[30];
     strcpy(nomefucile,"ak47");
-    Object fucile=Object(nomefucile,13);
+    Object fucile=Object(nomefucile,15);
     char nomepozione[30];
     strcpy(nomepozione,"potion");
     Object pozione=Object(nomepozione,0);

@@ -24,7 +24,7 @@ Spider::Spider(){ //costruttore del ragno
 	strcpy(name,"Ragno\0");
 	MaxHp=25;
 	Hp=MaxHp;
-	damage=15;
+	damage=10;
 }
 
 Zombie::Zombie(){ //costruttore dello zombie

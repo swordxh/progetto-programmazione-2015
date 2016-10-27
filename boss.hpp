@@ -4,7 +4,7 @@
 #include <unistd.h>
 #include "game.hpp"
 
-const int z = 2; // n indica il numero dei giocatori, k aumenta con l'avanzare dei turni, z è il moltiplicatore per la vita del boss, att il giocatore attuale
+const double z = 0.8; // n indica il numero dei giocatori, k aumenta con l'avanzare dei turni, z è il moltiplicatore per la vita del boss, att il giocatore attuale
 
 class boss{
 protected:
@@ -35,7 +35,7 @@ protected:
     databaseObject* database; //mi serve per usare l'inventario
     int att; //indica se attacca il boss (-1) o i giocatori (il loro ID)
     int scelto; //indica quale giocatore attaccare nell'attacco standard e in quello mortale
-    const int potionHP=30;
+    int potionHP;
     int m;
     Manage *manage; //serve per sanitycheck() e per verificare che gli input da tastiera siano corretti
 public:
