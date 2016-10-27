@@ -1,7 +1,7 @@
 #include "game.hpp"
 #include "battle.hpp"
 #include "provmappa.hpp"
-#include "boss.hpp"
+#include "finale.hpp"
 using namespace std;
 
 Object::Object(char nome[], int danno){ //costruttore  inizializzazione
@@ -143,16 +143,16 @@ void Queue::dequeue(int idPlayer){
                 while (track->next!=q) {
                     track=track->next;
                 }
-                
+
                 track->next=q->next;
                 track=NULL;
-                
+
                 Node* app; //elimino elemento di testa
                 app=q;
                 q=q->next;
                 delete app;
                 app=NULL;
-                
+
                 }
             else{ //caso generale eliminazione nodo
                 Node* p=q;
@@ -361,7 +361,7 @@ void Manage::dropObject(Player* giocatore){
         }
         bool error=true;
         int risposta=0;
-        
+
         if (database->oggetto[die]!=NULL)
         {
             while(error)
@@ -480,7 +480,7 @@ void Manage::startGame(){
     }while (retry);
     cout<<endl;
     this->setPlayers(nplayers);
-    
+
     cout<<"Inserisci numero rounds per giocatore: ";
     do{
       retry=false;
@@ -492,20 +492,20 @@ void Manage::startGame(){
     }while (retry);
     cout<<endl;
     this->setRounds(nrounds);
-    
+
     this->builtQueue();
     this->assignDefaultObject();
     Map mappa(nPlayers);
     stanza* basemappa=mappa.initiatestanze();
     bool newroom=false;
     char dir;
-    
+
     Node* app=l->Head();
 
     while (l->Head()!=NULL && roundsCounter<nRounds){
         roundsCounter++;
         cout<<"ROUND "<<roundsCounter<<endl;
-        
+
         do{
             flag=false;
             mappa.stampa();
