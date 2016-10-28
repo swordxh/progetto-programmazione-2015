@@ -108,7 +108,7 @@ void finale::LoseScreen(){
 }
 void finale::HealthBar(int currenthpMonster,int maxhpMonster){ //20 barrette
     int i;
-    cout <<endl<< "                                     " << MonsterName << endl<<" ";
+    cout <<endl<< "                                     " << MonsterName <<"  ("<<currenthpMonster<<"/"<<maxhpMonster<<" HP)"<< endl<<" ";
     for(i=1; i<=78;i++)cout<<"-";
     cout<<endl<<'|';
     i=1;
