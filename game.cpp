@@ -461,6 +461,7 @@ void Manage::setDefaultObject(Object oggetto){
 }
 
 void Manage::startGame(){
+    cout<<"I nostri eroi, sotto incarico del Signore di Hasfurgharden, s'incamminano verso le miniere scarlatte, tana del feroce Drago di Rungehan. \nIl regno è ormai allo stremo, le famiglie più povere non riescono più a sopravvivere dopo l'arrivo del malefico mostro, che ogni dì razia il villagio;\n solo i nostri eroi possono salvarli, che Restafor li benedica! "<<endl<<endl;
     int nplayers=0;
     int nrounds=0;
     int roundsCounter=0;
@@ -469,7 +470,7 @@ void Manage::startGame(){
     bool retry=false;
     int appdeath=-1;
 
-    cout<<"Inserisci numero giocatori: ";
+    cout<<"Quanti eroi vuoi inviare nel dungeon?: "<<endl;
     do{
       retry=false;
       nplayers=sanitycheck();
@@ -481,7 +482,7 @@ void Manage::startGame(){
     cout<<endl;
     this->setPlayers(nplayers);
 
-    cout<<"Inserisci numero rounds per giocatore: ";
+    cout<<"Indica alla squadra quanto devono raziare prima di attaccare il drago:"<<endl;
     do{
       retry=false;
       nrounds=sanitycheck();
@@ -504,9 +505,10 @@ void Manage::startGame(){
 
     while (l->Head()!=NULL && roundsCounter<nRounds){
         roundsCounter++;
-        cout<<"ROUND "<<roundsCounter<<endl;
-
+        cout<<"                              ROUND "<<roundsCounter<<endl;
+        cout<<"[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]"<<endl;
         do{
+
             flag=false;
             mappa.stampa();
             if (app->player.getsonoqui()==NULL)app->player.writesonoqui(basemappa);
@@ -532,6 +534,7 @@ void Manage::startGame(){
                 ndead++;
             }
             if (!flag && app!=NULL)app=app->next; //se non c'è stata eliminazione e coda non è vuota faccio scorrere app
+            cout<<"======================================================================"<<endl;
         }while (app!=l->Head());
     }
     app=NULL;
@@ -539,7 +542,7 @@ void Manage::startGame(){
         finale fine(l, nPlayers-ndead, this);
         fine.battleManager();
     }
-    else cout<<"              AVETE PERSO!!!!";
+    else cout<<"       PURTROPPO TUTTI GLI EROI SONO PERITI, QUAL DISGRAZIA PER IL REGNO DI HASFURGHARDEN!!!!";
     delete l;
     l=NULL;
 }
