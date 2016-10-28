@@ -28,6 +28,7 @@ class stanza{
         stanza(int xi, int yi);
         int getx();
         int gety();
+        void deleteplayer(int idp);
 
         stanza* getnord();
         stanza* getsud();

@@ -525,6 +525,7 @@ void Manage::startGame(){
             if (newroom)this->spawnMonsterOrObject(&app->player); //battaglia o trova oggetto
             if(app->player.life()<=0){ //Se giocatore è morto lo elimino dalla lista
                 flag=true;
+                app->player.getsonoqui()->deleteplayer(app->player.showId());
                 appdeath=app->player.showId();
                 app=app->next; //prima di eliminare nodo lista devo far scorrere app perchè sta puntando il nodo da eliminare
                 if (app->next==app) { //nel caso in cui devo eliminare l'unico elemento nella lista app non potrà puntare al successivo (in quanto il successivo è sempre il primo elemento che andrà eliminato
