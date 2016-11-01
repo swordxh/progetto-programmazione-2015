@@ -2,7 +2,6 @@
 #define inventario_hpp
 
 #include "oggetto.hpp"
-using namespace std;
 
 class Inventory{
 protected:
