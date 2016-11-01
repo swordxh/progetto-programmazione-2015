@@ -1,6 +1,5 @@
 #include "coda.hpp"
 
-
 Queue::Queue(){
     q=NULL;
 }
