@@ -1,8 +1,8 @@
 #ifndef database_hpp
-#define database_hpp
-#include "oggetto.hpp"
 
 #include <stdio.h>
+#define database_hpp
+#include "oggetto.hpp"
 using namespace std;
 
 class databaseObject{
