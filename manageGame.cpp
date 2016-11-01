@@ -74,7 +74,7 @@ void Manage::spawnMonsterOrObject(Player* giocatore){
         b=NULL;
     }
     else{
-        if (!database->databaseEmpty()) {
+        if (database!=NULL) {
             die = (rand() % 5) +1; //avendo 6 oggetti faccio uscire un numero tra 1 e 6 per selezionare un oggetto a caso da database oggetti
             int count=0;
             while (database->slotDatabase(die)==NULL && count<6) {
@@ -165,7 +165,7 @@ void Manage::spawnMonsterOrObject(Player* giocatore){
 }
 
 void Manage::dropObject(Player* giocatore){
-    if(!database->databaseEmpty()){
+    if(database!=NULL){
         int die = 0;
         srand(time(0));
         die = (rand() % 5) +1; //avendo 6 oggetti faccio uscire un numero tra 1 e 6 per selezionare un oggetto a caso da database oggetti
@@ -368,3 +368,4 @@ void Manage::startGame(){
     delete l;
     l=NULL;
 }
+
