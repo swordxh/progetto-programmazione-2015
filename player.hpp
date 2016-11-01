@@ -13,8 +13,6 @@
 #include "inventario.hpp"
 using namespace std;
 
-
-
 class Player{
 protected:
     int id; //identificatore giocatore
