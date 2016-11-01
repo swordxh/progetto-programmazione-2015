@@ -1,10 +1,3 @@
-/*
- * monster.hpp
- *
- *  Created on: 26 Sep 2016
- *      Author: swordxh
- */
-
 #ifndef MONSTER_HPP_
 #define MONSTER_HPP_
 
