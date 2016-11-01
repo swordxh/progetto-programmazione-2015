@@ -2,9 +2,10 @@
 #ifndef PROVMAPPA_H
 #define PROVMAPPA_H
 
-#include "game.hpp"
 #include "sourcestanza.hpp"
-#include <iostream>
+#include "player.hpp"
+
+
 using namespace std;
 
 struct lista_stanze {
