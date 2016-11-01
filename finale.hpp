@@ -2,7 +2,10 @@
 #define FINALE_HPP_INCLUDED
 
 #include "boss.hpp"
-#include "game.hpp"
+#include "coda.hpp"
+#include "player.hpp"
+#include "database.hpp"
+#include "manageGame.hpp"
 
 class finale{
 protected:
