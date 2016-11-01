@@ -1,14 +1,8 @@
-/*
- * battle.hpp
- *
- *  Created on: 25 Sep 2016
- *      Author: swordxh
- */
-
 #ifndef BATTLE_HPP_
 #define BATTLE_HPP_
 
-#include "game.hpp"//da eliminare
+#include "manageGame.hpp"
+#include "player.hpp"
 #include "monster.hpp"
 
 class battle{
