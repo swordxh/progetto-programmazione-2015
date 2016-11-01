@@ -1,5 +1,4 @@
 #include "inventario.hpp"
-using namespace std;
 
 Inventory::Inventory(){
     int i=0;
