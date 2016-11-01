@@ -1,9 +1,3 @@
-/*
- * monster.cpp
- *
- *  Created on: 26 Sep 2016
- *      Author: swordxh
- */
 #include "monster.hpp"
 
 monster::monster(){ //la classe monster è una classe fantoccio che ha metodi base utili a tutti i mostri, non viene mai usata direttamente
