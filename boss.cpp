@@ -1,5 +1,4 @@
 #include "boss.hpp"
-using namespace std;
 
 boss::boss(int *nPlayers){
         strcpy(name,"Drago\0"); // nome
