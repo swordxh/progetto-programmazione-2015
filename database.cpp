@@ -28,7 +28,8 @@ bool databaseObject::databaseEmpty(){
     int i=0;
     bool flag=false;
     
-    while(i<6 && flag==0) {
+    while(i<5 && flag==0) {
+        ièè;
         if (this->slotDatabase(i)!=NULL){
             flag=true;
         }
