@@ -1,8 +1,8 @@
-//
 #ifndef SOURCESTANZA_HPP
 #define SOURCESTANZA_HPP
 
 #include <stddef.h>
+using namespace std;
 
 struct lista_Players {
     int idPlayer;
@@ -47,3 +47,4 @@ class stanza{
 
 };
 #endif // SOURCESTANZA_HPP
+
