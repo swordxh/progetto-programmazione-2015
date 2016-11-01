@@ -6,9 +6,11 @@
  */
 
 #ifndef MONSTER_HPP_
-#include "game.hpp" //da eliminare
-
 #define MONSTER_HPP_
+
+#include "player.hpp"
+
+using namespace std;
 
 class monster{
 protected:
