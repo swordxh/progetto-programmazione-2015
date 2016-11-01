@@ -1,6 +1,4 @@
-#include "game.hpp"
-#include "battle.hpp"
-#include "boss.hpp"
+#include "manageGame.hpp"
 
 int main(){
     char nomespada[30];
