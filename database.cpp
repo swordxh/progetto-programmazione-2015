@@ -40,3 +40,4 @@ bool databaseObject::databaseEmpty(){
     }
     else return true;
 }
+
