@@ -1,8 +1,9 @@
 #ifndef BOSS_H_INCLUDED
 #define BOSS_H_INCLUDED
+
 #include <cstring>
 #include <unistd.h>
-#include "game.hpp"
+using namespace std;
 
 const double z = 0.8; // n indica il numero dei giocatori, k aumenta con l'avanzare dei turni, z è il moltiplicatore per la vita del boss, att il giocatore attuale
 
