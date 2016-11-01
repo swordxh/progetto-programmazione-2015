@@ -3,7 +3,6 @@
 
 #include "player.hpp"
 #include <stdio.h>
-
 using namespace std;
 
 struct Node{
