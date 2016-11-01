@@ -1,11 +1,3 @@
-//
-//  manageAndDatabase.cpp
-//  CreazioneClassi
-//
-//  Created by Damiano Bellucci on 01/11/16.
-//  Copyright © 2016 Damiano Bellucci. All rights reserved.
-//
-
 #include "manageGame.hpp"
 #include "battle.hpp"
 #include "provmappa.hpp"
