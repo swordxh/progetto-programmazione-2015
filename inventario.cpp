@@ -1,6 +1,6 @@
 #include "inventario.hpp"
 
-Inventory::Inventory(){
+Inventory::Inventory(){ //inventario ha 5 oggetti 
     int i=0;
     for (i=0;i<5;i++){
         oggetto[i]=NULL;
