@@ -299,7 +299,7 @@ void Manage::startGame(){
         }
     }while (retry);
     cout<<endl;
-    this->setPlayers(nplayers);
+    setPlayers(nplayers);
     
     cout<<"Indica alla squadra per quanti turni ognuno deve raziare prima di attaccare il drago:"<<endl;
     do{
@@ -311,10 +311,10 @@ void Manage::startGame(){
         }
     }while (retry);
     cout<<endl;
-    this->setRounds(nrounds);
     
-    this->builtQueue();
-    this->assignDefaultObject();
+    setRounds(nrounds);
+    builtQueue();
+    assignDefaultObject();
     Map mappa(nPlayers);
     stanza* basemappa=mappa.initiatestanze();
     bool newroom=false;
@@ -368,4 +368,5 @@ void Manage::startGame(){
     delete l;
     l=NULL;
 }
+
 
