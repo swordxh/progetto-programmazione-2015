@@ -315,8 +315,8 @@ void Manage::startGame(){
     setRounds(nrounds);
     builtQueue();
     assignDefaultObject();
-    Map mappa(nPlayers);
-    stanza* basemappa=mappa.initiatestanze();
+    Map mappa(nPlayers); //creo oggetto mappa e la inizializzo con n giocatori presi in input da tastiera
+    stanza* basemappa=mappa.initiatestanze();  //con initiatestanze torno la testa della lista delle stanze, che assegno a variabile puntatore base mappa
     bool newroom=false;
     char dir;
     
@@ -341,8 +341,8 @@ void Manage::startGame(){
                     cout<<"devi inserire uno dei seguenti caratteri minuscoli! w a s d"<<endl;
                 }
             }while (retry);
-            newroom=mappa.new_direction(dir, &app->player);
-            if (newroom)this->spawnMonsterOrObject(&app->player); //battaglia o trova oggetto
+            newroom=mappa.new_direction(dir, &app->player); //new direction torna un booleano che è 1 se con il movimento del giocatore si crea la stanza, 0 se già esisteva
+            if (newroom)this->spawnMonsterOrObject(&app->player); //se newroom=1, cioè stanza è stata appena creata, entro in spawnMonsterOrObject
             if(app->player.life()<=0){ //Se giocatore è morto lo elimino dalla lista
                 flag=true;
                 app->player.getsonoqui()->deleteplayer(app->player.showId());
