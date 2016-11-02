@@ -1,6 +1,6 @@
 #include "database.hpp"
 
-databaseObject::databaseObject(){
+databaseObject::databaseObject(){ //il database può contenere 6 oggetti
     int i=0;
     for(i=0;i<6;i++){
         oggetto[i]=NULL;
