@@ -144,9 +144,9 @@
             }//fine caso [stanza NON già presente] aka (if (crea))
 
              ///ora spostare il Player
-            ptr_listapl satana;
-            satana = stvecchia->rimuv_Player (g1->showId(), stvecchia->get_pls()) ;
-            stvecchia->write_pls(satana);
+            ptr_listapl app;
+            app = stvecchia->rimuv_Player (g1->showId(), stvecchia->get_pls()) ;
+            stvecchia->write_pls(app);
 
             if (dir=='w'){ stvecchia->getnord()->add_Player(g1->showId()) ; }
             else if (dir=='a'){ stvecchia->getwest()->add_Player(g1->showId()) ; }
