@@ -4,7 +4,7 @@ Queue::Queue(){
     q=NULL;
 }
 
-void Queue::enqueue (Player giocatore){
+void Queue::enqueue (Player giocatore){ //coda creata sarà circolare
     if (q==NULL) {
         q=new Node;
         q->player=giocatore;
